@@ -1,0 +1,2 @@
+RFC 9293: https://datatracker.ietf.org/doc/html/rfc9293
+Python Sockets: https://docs.python.org/3/library/socket.html
