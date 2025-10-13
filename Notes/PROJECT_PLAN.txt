@@ -1,0 +1,24 @@
+Controlul fluxului prin intermediul unui protocol cu fereastră glisantă. Aplicație demonstrativă.
+
+Module de folosit:
+    -> socket
+    -> threading (?)
+    -> select (?)
+
+Set pachete proprietare:
+    -> (?)
+
+Selective repeat nak:
+    -> (?)
+
+File transfer cu sliding window:
+    -> (?)
+
+Pierderea voita a unor pachete:
+    -> (?)
+
+
+
+Intrebari:
+    -> trebuie neaparat doar 2 script-uri sau trebuie doar 2 interfete, client si server?
+    -> clientul trebuie sa aiba acces la tot file system-ul de pe server?

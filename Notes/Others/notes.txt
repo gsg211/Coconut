@@ -1,0 +1,50 @@
+RTT
+
+Timpul pentru ca semnalul sa fie trimis + timpul ca semnalul sa fie primit.
+    RTT = 2*Tp (Timp propagare)
+
+
+FLOW CONTROL
+    -> inainte de trimiterea data frames, trebuie ca dispozitivele sa fie de acord la un flow rate.
+    -> sender-ul dupa asta trebuie sa trimite la aceasta viteza.
+    -> controleaza cata date pot fi trimise pana cand sa astepte pt un ACK.
+    -> Receiverul trebuie sa notifice sender-ul cand are buffer-ul sau memoria plina.
+            -> PROTOCOALE specifice
+
+
+STOP AND WAIT FLOW CONTROL:
+    -> noiseless channel protocol
+    -> no error control
+    -> sender trimite un frame, asteapta ACK, pana il primeste se opreste
+    -> receiverul trimite mereu un ACK dupa fiecare packet consumat
+
+    -> NU rezolva problema pierderii de date.
+    -> NU rezolva problema pierderii de ACK.
+    -> NU rezolva daca sender primeste ACK tarziu, poate fi luat ca un ack pt alta data.
+
+STOP AND WAIT Automatic Repeat Request ARQ FLOW CONTROL:
+    -> Daca ACK nu vine dupa un FixedTime, atunci sender trimite iar acest frame.
+    -> SEQ number 
+    -> Daca Timerul e prea mic, se repeta trimiterea frame-ului iar si iar
+
+
+SLIDING WINDOW PROTOCOL FLOW CONTROL:
+    -> Multiple frames at a time, parametru WINDOW SIZE
+    -> SEQ NUMBER
+    -> WINDOW SIZE = nr of frames cate pot trimite pana trb un ACK
+
+GO BACK N ARQ FLOW CONTROL:
+    -> N = sender window size: "go back 3", 3 frames can be sent before ACK
+    -> Protocol Pipelining:
+        -> Sender can send multiple frames before receiving ACK for the first
+    -> Frame-urile sunt numerotate secvential 
+    -> Daca un frame nu primeste un ACK intr-un time period, toate frame-urile sunt retrimise
+    -> Receiver Window size = 1.
+
+
+SELECTIVE REPEAT ARQ FLOW CONTROL:
+    -> Receiverul tine cont de un SEQ nr
+    -> Receiverul trimite un NACK doar pentru frame-ul care lipseste
+    -> Buffer la out of order packets
+    -> TIMER PER PACKET
+    -> WINDOW SE MISCA DOAR DACA CEL MAI VECHI PACHET E ACKNOWLEDGED
