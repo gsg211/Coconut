@@ -48,3 +48,4 @@ SELECTIVE REPEAT ARQ FLOW CONTROL:
     -> Buffer la out of order packets
     -> TIMER PER PACKET
     -> WINDOW SE MISCA DOAR DACA CEL MAI VECHI PACHET E ACKNOWLEDGED
+    -> Optimal Window Size = ( Bandwidth*Delay (bits) -> bytes ) / packet size in bytes
