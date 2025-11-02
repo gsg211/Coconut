@@ -1,3 +1,8 @@
+### Description 
+
+This project implements the Sliding Window Protocol with selective repeat on negative acknowledgements over UDP, which uses a "window" to manage packet flow. This mechanism allows multiple packets to be in transit simultaneously while waiting for them to be acknowledged, then the window "slides" to the last packet that has not received an acknowledgement. Selective Repeat  only retransmits the packets that have received a NAK (negative acknowledgement) which means that they were lost.
+
+
 ### Client General Flow
 
 ![RC_P_CLIENT_FLOW](images/diagrams_flow_config/RCP_CL_flow.drawio.svg)
