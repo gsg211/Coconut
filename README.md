@@ -209,26 +209,32 @@ All packets used in this project will have all the custom fields defined in the 
 1 byte - enough to store 255 numbered headers
 
 Implemented custom headers together with their associated numbers:
-- **FLOW Headers:**
-    - **H_DONE**             -> 1  - 0b0000_0001 
-    - **H_CANCEL**           -> 2  - 0b0000_0010
-    - **H_SYN**              -> 3  - 0b0000_0011
-    - **H_SYN_CHANGECONFIG** -> 4  - 0b0000_0100
-    - **H_ACK**              -> 5  - 0b0000_0101
-    - **H_NAK**              -> 6  - 0b0000_0110
-    - **H_NAK**          -> 7  - 0b0000_0111
-    - **H_VALID**          -> 8  - 0b0000_1000
-    - **H_OP_FAILED**        -> 9  - 0b0000_1001
-    - **H_OP_SUCCESS**       -> 10 - 0b0000_1010
-    - **H_CONFIG**           -> 11 - 0b0000_1011
-    - **H_FIN**              -> 12 - 0b0000_1100
--  **OPERATION Headers**:
-   - **H_OP_ACCESS**         -> 16 - 0b0001_0000
-   - **H_OP_CREATE**         -> 32 - 0b0010_0000
-   - **H_OP_DELETE**         -> 48 - 0b0011_0000
-   - **H_OP_DOWNLOAD**       -> 64 - 0b0100_0000
-   - **H_OP_UPLOAD**       -> 80 - 0b0101_0000
-   - **H_OP_MOVE**       -> 96 - 0b0110_0000  
+**Flow headers**
+
+| HEADER NAME        | VALUE | VALUE IN BINARY |
+| ------------------ | ----- | --------------- |
+| H_DONE             | 1     | 0b0000_0001     |
+| H_CANCEL           | 2     | 0b0000_0010     |
+| H_SYN              | 3     | 0b0000_0011     |
+| H_SYN_CHANGECONFIG | 4     | 0b0000_0100     |
+| H_ACK              | 5     | 0b0000_0101     |
+| H_NAK              | 6     | 0b0000_0110     |
+| H_VALID            | 7     | 0b0000_0111     |
+| H_OP_FAILED        | 8     | 0b0000_1000     |
+| H_OP_SUCCESS       | 9     | 0b0000_1001     |
+| H_CONFIG           | 10    | 0b0000_1010     |
+| H_FIN              | 11    | 0b0000_1011     |
+**Operation Headers**
+
+| HEADER NAME   | VALUE | VALUE IN BINARY |
+| ------------- | ----- | --------------- |
+| H_OP_ACCESS   | 16    | 0b0001_0000     |
+| H_OP_CREATE   | 32    | 0b0010_0000     |
+| H_OP_DELETE   | 48    | 0b0011_0000     |
+| H_OP_DOWNLOAD | 64    | 0b0100_0000     |
+| H_OP_UPLOAD   | 80    | 0b0101_0000     |
+| H_OP_MOVE     | 96    | 0b0110_0000     |
+
 
 #### Sequence Number
 4 bytes - enough to store numbers in [0,2^32-1]
