@@ -252,11 +252,8 @@ Implemented custom headers together with their associated numbers:
   - The client responds to this with an acknowledgement containing `SEQnr = ( Received SEQ from server + 1 )`
 
 #### Data Length
-2 bytes - enough to store numbers in [0,2^16-1]
 
 The standard maximum packet data size used in this project will be 512bytes, but this setting can be altered by the client, in the configuration application.
-
-It tells the application exactly how many bytes of data to use. The UDP header Data Length field shows the entire datagram length size, which is not useful for knowing how much data is really transfered.
 
 #### Application Checksum
 
