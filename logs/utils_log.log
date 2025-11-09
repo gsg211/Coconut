@@ -1,0 +1,2 @@
+2025-11-09 19:10:16,260 | INFO     | MainThread | UTILS LOG: | Could not transform the received client id into an int
+2025-11-09 19:10:16,260 | INFO     | MainThread | UTILS LOG: | Could not transform the received window sz into an int

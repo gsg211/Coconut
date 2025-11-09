@@ -1,26 +1,26 @@
 from enum import IntEnum
 
-
-PAYLOAD_SZ             = int(512)
-HEADER_SZ              = int(1)
-SEQ_NR_SZ              = int(4)
-DATA_LEN_SZ            = int(2)
-APP_CHECKSUM_SZ        = int(2)
-CHECKSUM_CHUNK_SZ      = int(2) # 2 bytes
-MAX_DATA_SZ            = PAYLOAD_SZ - HEADER_SZ - SEQ_NR_SZ - DATA_LEN_SZ - APP_CHECKSUM_SZ 
-
-
-HEADER_POS = slice(0,1) # slice is end exclusive, so it's really 0-0
-SEQ_NR_POS = slice(1,5) # 1-4
-DATA_LEN_POS = slice(5,7) # 5-6
-CHECKSUM_POS = slice(7,9) # 7-8
-PAYLOAD_POS = slice(9,512) # 9-511
+HEADER_POS             = slice(0,1) # slice is end exclusive, so it's really 0-0
+SEQ_NR_POS             = slice(1,5) # 1-4
+DATA_LEN_POS           = slice(5,7) # 5-6
+CHECKSUM_POS           = slice(7,9) # 7-8
+PAYLOAD_POS            = slice(9,512) # 9-511
 
 
 class InvalidDataSzException(Exception):
     def __init__(self, field:str):
         super().__init__ ('Invalid size of data given to: {}'.format(field.upper()))
+        
 
+
+class UDP_Size(IntEnum):
+    PAYLOAD_SZ         = 512
+    HEADER_SZ          = 1
+    SEQ_NR_SZ          = 4
+    DATA_LEN_SZ        = 4
+    APP_CHECKSUM_SZ    = 2
+    CHECKSUM_CHUNK_SZ  = 2
+    MAX_DATA_SZ        = PAYLOAD_SZ - HEADER_SZ - SEQ_NR_SZ - DATA_LEN_SZ - APP_CHECKSUM_SZ
 
 class Flow_Header(IntEnum):
     H_DONE             = 0b0000_0001
@@ -37,7 +37,7 @@ class Flow_Header(IntEnum):
     
     @property
     def as_bytes(self) -> bytes:
-        return self.to_bytes(HEADER_SZ,'big')
+        return self.to_bytes(UDP_Size.HEADER_SZ,'big')
 
 class Operation_Header(IntEnum):
     H_OP_ACCESS        = 0b0001_0000 
@@ -49,8 +49,16 @@ class Operation_Header(IntEnum):
     
     @property
     def as_bytes(self) -> bytes:
-        return self.to_bytes(HEADER_SZ,'big')
+        return self.to_bytes(UDP_Size.HEADER_SZ,'big')
     
+    
+CLIENT_CONFIG_PATH     = '../src/client/config.txt' 
+SERVER_CONFIG_DIR_PATH = '../src/server/saved_configs'
+UTILS_LOG_PATH = '../logs/utils_log.log'
+
+class Config_Line(IntEnum):
+    ID_LINE           = 0
+    WINDOW_LINE       = 1
 
     
     

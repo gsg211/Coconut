@@ -1,7 +1,9 @@
-RFC 9293 (TCP): https://datatracker.ietf.org/doc/html/rfc9293
-Python Sockets: https://docs.python.org/3/library/socket.html
-RFC 768 (UDP): https://www.rfc-editor.org/rfc/rfc768.html
-Diagram tool: https://draw.io/
-Logger: https://docs.python.org/3/library/logging.html
-Custom Exceptions: https://www.geeksforgeeks.org/python/define-custom-exceptions-in-python/
-Threading - Lock : https://docs.python.org/3/library/threading.html#lock-objects
+RFC 9293 (TCP):        https://datatracker.ietf.org/doc/html/rfc9293
+Python Sockets:        https://docs.python.org/3/library/socket.html
+RFC 768 (UDP):         https://www.rfc-editor.org/rfc/rfc768.html
+Diagram tool:          https://draw.io/
+Logger:                https://docs.python.org/3/library/logging.html
+Custom Exceptions:     https://www.geeksforgeeks.org/python/define-custom-exceptions-in-python/
+Threading - Lock:      https://docs.python.org/3/library/threading.html#lock-objects
+Paths - Pathlib:       https://docs.python.org/3/library/pathlib.html
+Timestamp - Datetime:  https://docs.python.org/3/library/datetime.html#datetime.datetime

@@ -2,7 +2,7 @@ from threading import Thread, Lock
 import time
 
 class myTimer():
-    def __init__(self, step_in_seconds:float, notify_threshold:float):
+    def __init__(self, step_in_seconds:float, notify_threshold:float, owner:str = 'None'):
         self.notify_threshold:float = notify_threshold
         self.notifications:int = 0
         
@@ -11,7 +11,7 @@ class myTimer():
         
         self.step_in_seconds:float = step_in_seconds
         self.lock:Lock = Lock()  
-        self.thr:Thread = Thread(target=self.worker,name='threadTimer')
+        self.thr:Thread = Thread(target=self.worker,name='{} - TimerThread - '.format(owner,step_in_seconds))
         self.value:float = float(0)
         
     def increment(self):
