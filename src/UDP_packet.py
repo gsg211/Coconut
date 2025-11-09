@@ -1,5 +1,5 @@
 import defines as d
-
+import debugging.logs as logs
 class UDP_Packet():
     __custom_header:bytes
     __seq_nr:bytes
@@ -12,12 +12,14 @@ class UDP_Packet():
         
         header_bytes = header.to_bytes(d.UDP_Size.HEADER_SZ,'big')
         if len(header_bytes) != d.UDP_Size.HEADER_SZ:
+            logs.utils_logger.info("Invalid header size passed in init of UDP packet")
             raise d.InvalidDataSzException('CUSTOM_HEADER')
         self.__custom_header = header_bytes
         
         
         seq_nr_bytes = seq_nr.to_bytes(d.UDP_Size.SEQ_NR_SZ,'big')
         if len(seq_nr_bytes) != d.UDP_Size.SEQ_NR_SZ:
+            logs.utils_logger.info("Invalid seq nr size passed in init of UDP packet")
             raise d.InvalidDataSzException('SEQ_NR')
         self.__seq_nr = seq_nr_bytes
         
@@ -25,7 +27,8 @@ class UDP_Packet():
         payload_bytes = bytes(payload,'utf-8')
         payload_len_tmp = len(payload_bytes)
         
-        if payload_len_tmp > d.UDP_Size.MAX_DATA_SZ:
+        if payload_len_tmp > d.UDP_Size.MAX_DATA_SZ:        
+            logs.utils_logger.info("Data passed is too large to fit in packet")
             raise d.InvalidDataSzException('ACTUAL_PAYLOAD')
         
         self.__data_len = payload_len_tmp.to_bytes(d.UDP_Size.DATA_LEN_SZ,'big')
@@ -36,22 +39,44 @@ class UDP_Packet():
         else:
             self.__payload = payload_bytes
         
-        self.__app_checksum = bytes(d.UDP_Size.APP_CHECKSUM_SZ)
         
+        
+        self.__app_checksum                 = bytes(d.UDP_Size.APP_CHECKSUM_SZ)
         self.__full_message[d.HEADER_POS]   = self.__custom_header
         self.__full_message[d.SEQ_NR_POS]   = self.__seq_nr
         self.__full_message[d.DATA_LEN_POS] = self.__data_len
         self.__full_message[d.CHECKSUM_POS] = self.__app_checksum
         self.__full_message[d.PAYLOAD_POS]  = self.__payload
         
-        checksum = self.calculate_checksum()
-        self.__app_checksum = checksum
+        checksum                            = self.calculate_checksum()
+        self.__app_checksum                 = checksum
         self.__full_message[d.CHECKSUM_POS] = self.__app_checksum
+
+
 
     def init_from_full_message(self, full_message:bytearray):
         if len(full_message) != d.UDP_Size.PAYLOAD_SZ:
             raise d.InvalidDataSzException('FULL MESSAGE ON INIT')
-        self.__full_message = full_message
+        self.__full_message  = full_message
+        self.__custom_header = self.__full_message[d.HEADER_POS]   
+        self.__seq_nr        = self.__full_message[d.SEQ_NR_POS]   
+        self.__data_len      = self.__full_message[d.DATA_LEN_POS] 
+        self.__app_checksum  = self.__full_message[d.CHECKSUM_POS] 
+        self.__payload       = self.__full_message[d.PAYLOAD_POS]  
+        
+    def get_custom_header(self)->int:
+        return int.from_bytes(self.__custom_header)
+    def get_seq_nr(self)->int:
+        return int.from_bytes(self.__seq_nr)
+    def get_data_len(self)->int:
+        return int.from_bytes(self.__data_len)
+    def get_checksum(self)->int:
+        return int.from_bytes(self.__app_checksum)
+    def get_payload(self)->str:
+        data_len = self.get_data_len()
+        return self.__payload[0:data_len].decode()
+    
+    
         
     def get_msg_as_bytes(self) ->bytes:
         return bytes(self.__full_message)

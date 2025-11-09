@@ -17,7 +17,7 @@ class UDP_Size(IntEnum):
     PAYLOAD_SZ         = 512
     HEADER_SZ          = 1
     SEQ_NR_SZ          = 4
-    DATA_LEN_SZ        = 4
+    DATA_LEN_SZ        = 2
     APP_CHECKSUM_SZ    = 2
     CHECKSUM_CHUNK_SZ  = 2
     MAX_DATA_SZ        = PAYLOAD_SZ - HEADER_SZ - SEQ_NR_SZ - DATA_LEN_SZ - APP_CHECKSUM_SZ
