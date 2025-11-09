@@ -3,3 +3,4 @@ Python Sockets: https://docs.python.org/3/library/socket.html
 RFC 768 (UDP): https://www.rfc-editor.org/rfc/rfc768.html
 Diagram tool: https://draw.io/
 Logger: https://docs.python.org/3/library/logging.html
+Custom Exceptions: https://www.geeksforgeeks.org/python/define-custom-exceptions-in-python/

@@ -4,7 +4,7 @@ import socket as s
 from abc import ABC, abstractmethod
 from typing import override
 
-import logs as l
+import debugging.logs as l
 open('../logs/cl_log.log', 'w').close()
 
 

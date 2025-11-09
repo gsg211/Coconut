@@ -214,6 +214,8 @@ All packets used in this project will have all the custom fields defined in the 
 1 byte - enough to store 255 numbered headers
 
 Implemented custom headers together with their associated numbers:
+
+
 **Flow headers**
 
 | HEADER NAME        | VALUE | VALUE IN BINARY |
@@ -229,6 +231,8 @@ Implemented custom headers together with their associated numbers:
 | H_OP_SUCCESS       | 9     | 0b0000_1001     |
 | H_CONFIG           | 10    | 0b0000_1010     |
 | H_FIN              | 11    | 0b0000_1011     |
+
+
 **Operation Headers**
 
 | HEADER NAME   | VALUE | VALUE IN BINARY |
@@ -253,7 +257,11 @@ Implemented custom headers together with their associated numbers:
 
 #### Data Length
 
+2 bytes - enough to store numbers in [0,2^16-1]
+
 The standard maximum packet data size used in this project will be 512bytes, but this setting can be altered by the client, in the configuration application.
+
+It tells the application exactly how many bytes of data to use. The UDP header Data Length field shows the entire datagram length size, which is not useful for knowing how much data is really transfered.
 
 #### Application Checksum
 
