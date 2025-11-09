@@ -6,4 +6,3 @@ if __name__ == '__main__':
     msg = bytes("hello",'utf-8')
     my_packet = udpp.UDP_Packet(d.Flow_Header.H_SYN,3,'Hello')
     bts = my_packet.get_msg_as_bytes()
-    

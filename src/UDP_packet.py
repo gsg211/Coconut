@@ -38,13 +38,32 @@ class UDP_Packet():
         
         self.__app_checksum = bytes(d.APP_CHECKSUM_SZ)
         
-        self.__full_message = self.__custom_header + self.__seq_nr + self.__data_len + self.__app_checksum + self.__payload
-      
+        # self.__full_message = self.__custom_header + self.__seq_nr + self.__data_len + self.__app_checksum + self.__payload
+        self.__full_message[d.HEADER_POS] = self.__custom_header
+        self.__full_message[d.SEQ_NR_POS] = self.__seq_nr
+        self.__full_message[d.DATA_LEN_POS] = self.__data_len
+        self.__full_message[d.CHECKSUM_POS] = self.__app_checksum
+        self.__full_message[d.PAYLOAD_POS] = self.__payload
+        
+        checksum = self.calculate_checksum()
+        self.__app_checksum = checksum
+        self.__full_message[d.CHECKSUM_POS] = self.__app_checksum
 
-          
+
     def get_msg_as_bytes(self) ->bytes:
         return bytes(self.__full_message)
-      
+    
+    def calculate_checksum(self) -> bytes:
+        total = int(0)
+        for i in range(0,d.PAYLOAD_SZ,d.CHECKSUM_CHUNK_SZ):
+            current_chunk = self.__full_message[i:i+d.CHECKSUM_CHUNK_SZ]
+            total += int.from_bytes(current_chunk,'big')
+            wraparound_bit = total >> 16 # (2 byte checksum)
+            total = total & 0xFFFF + wraparound_bit
+            # print("chunk nr {}: {}".format(i/2+1,current_chunk))
+        total = ~total # c1
+        total = total & 0xFFFF # lower 16 bits
+        return total.to_bytes(d.CHECKSUM_CHUNK_SZ,'big')
       
     
     def print_header(self):

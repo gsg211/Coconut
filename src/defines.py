@@ -6,7 +6,16 @@ HEADER_SZ              = int(1)
 SEQ_NR_SZ              = int(4)
 DATA_LEN_SZ            = int(2)
 APP_CHECKSUM_SZ        = int(2)
+CHECKSUM_CHUNK_SZ      = int(2) # 2 bytes
 MAX_DATA_SZ            = PAYLOAD_SZ - HEADER_SZ - SEQ_NR_SZ - DATA_LEN_SZ - APP_CHECKSUM_SZ 
+
+
+HEADER_POS = slice(0,1) # slice is end exclusive, so it's really 0-0
+SEQ_NR_POS = slice(1,5) # 1-4
+DATA_LEN_POS = slice(5,7) # 5-6
+CHECKSUM_POS = slice(7,9) # 7-8
+PAYLOAD_POS = slice(9,512) # 9-511
+
 
 class InvalidDataSzException(Exception):
     def __init__(self, field:str):
