@@ -48,7 +48,11 @@ class UDP_Packet():
         self.__app_checksum = checksum
         self.__full_message[d.CHECKSUM_POS] = self.__app_checksum
 
-
+    def init_from_full_message(self, full_message:bytearray):
+        if len(full_message) != d.PAYLOAD_SZ:
+            raise d.InvalidDataSzException('FULL MESSAGE ON INIT')
+        self.__full_message = full_message
+        
     def get_msg_as_bytes(self) ->bytes:
         return bytes(self.__full_message)
     
