@@ -2,3 +2,4 @@ RFC 9293 (TCP): https://datatracker.ietf.org/doc/html/rfc9293
 Python Sockets: https://docs.python.org/3/library/socket.html
 RFC 768 (UDP): https://www.rfc-editor.org/rfc/rfc768.html
 Diagram tool: https://draw.io/
+Logger: https://docs.python.org/3/library/logging.html

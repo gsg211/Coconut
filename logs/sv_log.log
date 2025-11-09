@@ -1,0 +1,2 @@
+2025-11-09 13:06:25,822 | INFO     | SERVER LOG:  | State changed: now is working
+2025-11-09 13:06:42,763 | INFO     | SERVER LOG:  | Received message from ('127.0.0.1', 48231): b'HELLO'
