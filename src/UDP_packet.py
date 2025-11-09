@@ -38,7 +38,6 @@ class UDP_Packet():
         
         self.__app_checksum = bytes(d.APP_CHECKSUM_SZ)
         
-        # self.__full_message = self.__custom_header + self.__seq_nr + self.__data_len + self.__app_checksum + self.__payload
         self.__full_message[d.HEADER_POS] = self.__custom_header
         self.__full_message[d.SEQ_NR_POS] = self.__seq_nr
         self.__full_message[d.DATA_LEN_POS] = self.__data_len
