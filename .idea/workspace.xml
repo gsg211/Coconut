@@ -1,12 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="a3f61069-666f-43f3-87c8-af2f8248cd53" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/RC Proiect.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/RC Proiect.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Notes/Others/notes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ReadmeFiles/Notes/Others/notes.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Notes/PROJECT_PLAN.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ReadmeFiles/Notes/PROJECT_PLAN.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Notes/TCP/notes.odt" beforeDir="false" afterPath="$PROJECT_DIR$/ReadmeFiles/Notes/TCP/notes.odt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Notes/TCP/notes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ReadmeFiles/Notes/TCP/notes.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/UDP/RCP_UDP_FORMAT.drawio.svg" beforeDir="false" afterPath="$PROJECT_DIR$/ReadmeFiles/images/UDP/RCP_UDP_FORMAT.drawio.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/diagrams_flow_config/RCP_ACTIVE_CLOSER.drawio.svg" beforeDir="false" afterPath="$PROJECT_DIR$/ReadmeFiles/images/diagrams_flow_config/RCP_ACTIVE_CLOSER.drawio.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/diagrams_flow_config/RCP_CL_Config.drawio.svg" beforeDir="false" afterPath="$PROJECT_DIR$/ReadmeFiles/images/diagrams_flow_config/RCP_CL_Config.drawio.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/diagrams_flow_config/RCP_CL_flow.drawio.svg" beforeDir="false" afterPath="$PROJECT_DIR$/ReadmeFiles/images/diagrams_flow_config/RCP_CL_flow.drawio.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/diagrams_flow_config/RCP_PASSIVE_CLOSER.drawio.svg" beforeDir="false" afterPath="$PROJECT_DIR$/ReadmeFiles/images/diagrams_flow_config/RCP_PASSIVE_CLOSER.drawio.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/diagrams_flow_config/RCP_SV_Config.drawio.svg" beforeDir="false" afterPath="$PROJECT_DIR$/ReadmeFiles/images/diagrams_flow_config/RCP_SV_Config.drawio.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/diagrams_flow_config/RCP_SV_flow.drawio.svg" beforeDir="false" afterPath="$PROJECT_DIR$/ReadmeFiles/images/diagrams_flow_config/RCP_SV_flow.drawio.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/diagrams_flow_data/RCP_Download.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/ReadmeFiles/images/diagrams_flow_data/RCP_Download.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/diagrams_flow_data/RCP_Move.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/ReadmeFiles/images/diagrams_flow_data/RCP_Move.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/diagrams_flow_data/RCP_Upload.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/ReadmeFiles/images/diagrams_flow_data/RCP_Upload.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/diagrams_flow_data/RCP_access.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/ReadmeFiles/images/diagrams_flow_data/RCP_access.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/diagrams_flow_data/RCP_create_delete.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/ReadmeFiles/images/diagrams_flow_data/RCP_create_delete.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testing.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,12 +53,20 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.test.executor": "Run",
+    "Python.testing.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/ReadmeFiles" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>

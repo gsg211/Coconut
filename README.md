@@ -5,7 +5,7 @@ This project implements the Sliding Window Protocol with selective repeat on neg
 
 ### Client General Flow
 
-![RC_P_CLIENT_FLOW](images/diagrams_flow_config/RCP_CL_flow.drawio.svg)
+![RC_P_CLIENT_FLOW](ReadmeFiles/images/diagrams_flow_config/RCP_CL_flow.drawio.svg)
 
 The client behavior is based on the state machine presented in the diagram.
 
@@ -43,7 +43,7 @@ After receiving all the response data, the client processes the response. If the
 
 ### Server General Flow
 
-![RC_P_SERVER_FLOW](images/diagrams_flow_config/RCP_SV_flow.drawio.svg)
+![RC_P_SERVER_FLOW](ReadmeFiles/images/diagrams_flow_config/RCP_SV_flow.drawio.svg)
 
 The server behavior is based on the state machine presented in the diagram.
 
@@ -72,7 +72,7 @@ The outcome of the processing determines the response.
 
 ### Client-side Session Setup
 
-![RC_P_CLIENT_CONFIG](images/diagrams_flow_config/RCP_CL_Config.drawio.svg)
+![RC_P_CLIENT_CONFIG](ReadmeFiles/images/diagrams_flow_config/RCP_CL_Config.drawio.svg)
 
 #### There are four main stages
 
@@ -105,7 +105,7 @@ From the client perspective, if the connection is established, but a server `SYN
 
 ### Server-side Session Setup
 
-![RC_P_SERVER_CONFIG](images/diagrams_flow_config/RCP_SV_Config.drawio.svg)
+![RC_P_SERVER_CONFIG](ReadmeFiles/images/diagrams_flow_config/RCP_SV_Config.drawio.svg)
 
 This process is designed to handle two types of clients
 
@@ -137,7 +137,7 @@ If the final client-side `ACK` is received, then the connection is established. 
 
 ### Active Closer Process
 
-![RC_P_PASSIVE_CLOSER](images/diagrams_flow_config/RCP_ACTIVE_CLOSER.drawio.svg)
+![RC_P_PASSIVE_CLOSER](ReadmeFiles/images/diagrams_flow_config/RCP_ACTIVE_CLOSER.drawio.svg)
 
 The closing process is bi-directional. This means either the client or the server can initialize it.
 
@@ -170,7 +170,7 @@ After the `TIME_WAIT` timer elapses, the active closer enters the final, CLOSED 
 
 ### Passive Closer Process
 
-![RC_P_PASSIVE_CLOSER](images/diagrams_flow_config/RCP_PASSIVE_CLOSER.drawio.svg)
+![RC_P_PASSIVE_CLOSER](ReadmeFiles/images/diagrams_flow_config/RCP_PASSIVE_CLOSER.drawio.svg)
 
 The process begins when a FIN packet is received from the active closer, signaling a request to shut down.
 
@@ -200,7 +200,7 @@ After sending the `FIN`, the passive closer enters the `LAST_ACK` state. Here it
 
 ## Proprietary UDP based packets
 
-![RC_P_UDP_STRUCTURE](images/UDP/RCP_UDP_FORMAT.drawio.svg)
+![RC_P_UDP_STRUCTURE](ReadmeFiles/images/UDP/RCP_UDP_FORMAT.drawio.svg)
 
 
 #### UDP Protocol fields
@@ -292,7 +292,7 @@ For example, if the selected probability is `n%`, then the number `n/100` will b
 #### Operations Dataflow
 
 
-![Access_Dataflow](/images/diagrams_flow_data/RCP_access.jpeg)
+![Access_Dataflow](/ReadmeFiles/images/diagrams_flow_data/RCP_access.jpeg)
 
 This operation is for viewing the contents of a directory in a tree-like format.
 
@@ -300,7 +300,7 @@ The client sends the filepath of the folder it wants to access.
 
 The server generates the tree and sends it to the client.
 
-![Access_Dataflow](/images/diagrams_flow_data/RCP_create_delete.jpeg)
+![Access_Dataflow](/ReadmeFiles/images/diagrams_flow_data/RCP_create_delete.jpeg)
 
 This operation is for creating or deleting a file on the server.
 
@@ -309,7 +309,7 @@ The server does the corresponding operation and signals to the client of its
 success.
 
 
-![Access_Dataflow](/images/diagrams_flow_data/RCP_Move.jpeg)
+![Access_Dataflow](/ReadmeFiles/images/diagrams_flow_data/RCP_Move.jpeg)
 
 This operation is similar to the mv command.
 
@@ -317,13 +317,13 @@ The client will send two filepaths separated by a H_DONE packet
 
 The server does the corresponding operation and signals to the client of its success.
 
-![Access_Dataflow](/images/diagrams_flow_data/RCP_Download.jpeg)
+![Access_Dataflow](/ReadmeFiles/images/diagrams_flow_data/RCP_Download.jpeg)
 
 The client sends the filepath of the file it wants to download.
 
 The server sends the contents of the file ended by a H_DONE packet. 
 
-![Access_Dataflow](/images/diagrams_flow_data/RCP_Upload.jpeg)
+![Access_Dataflow](/ReadmeFiles/images/diagrams_flow_data/RCP_Upload.jpeg)
 
 The client sends the filepath of the file it wants to upload.
 
