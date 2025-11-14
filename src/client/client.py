@@ -61,6 +61,3 @@ class Client(I_StateMachine):
         self.current_state.run(self)
          
 
-if __name__ == '__main__':
-    my_cl = Client()
-    my_cl.run()

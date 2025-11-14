@@ -7,3 +7,4 @@ Custom Exceptions:     https://www.geeksforgeeks.org/python/define-custom-except
 Threading - Lock:      https://docs.python.org/3/library/threading.html#lock-objects
 Paths - Pathlib:       https://docs.python.org/3/library/pathlib.html
 Timestamp - Datetime:  https://docs.python.org/3/library/datetime.html#datetime.datetime
+Selectors:             https://docs.python.org/3/library/selectors.html

@@ -6,12 +6,17 @@ DATA_LEN_POS           = slice(5,7) # 5-6
 CHECKSUM_POS           = slice(7,9) # 7-8
 PAYLOAD_POS            = slice(9,512) # 9-511
 
+WINDOW_SIZE            = int(3)
+
 
 class InvalidDataSzException(Exception):
     def __init__(self, field:str):
-        super().__init__ ('Invalid size of data given to: {}'.format(field.upper()))
+        super().__init__('Invalid size of data given to: {}'.format(field.upper()))
         
 
+class SocketNotOpenException(Exception):
+    def __init__(self, sck:str):
+        super.__init__('The socket {} is not properly configured',format(sck))
 
 class UDP_Size(IntEnum):
     PAYLOAD_SZ         = 512
@@ -59,6 +64,13 @@ UTILS_LOG_PATH = '../logs/utils_log.log'
 class Config_Line(IntEnum):
     ID_LINE           = 0
     WINDOW_LINE       = 1
+    
+    
+LOCAL_HOST_ADDR       = '127.0.0.1'
+DEFAULT_PORT_A        = int(8080)
+DEFAULT_PORT_B        = int(18080)
+MAX_CONNECTIONS       = int(1)
 
+NAME_UNDEFINED        = "UNDEFINED" 
     
     
