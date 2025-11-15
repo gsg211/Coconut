@@ -12,8 +12,8 @@ sv_logger.setLevel(l.DEBUG)
 utils_logger = l.getLogger('UTILS LOG:')
 utils_logger.setLevel(l.DEBUG)
 
-file_handler_sv = l.FileHandler('../logs/sv_log.log')
-file_handler_cl = l.FileHandler('../logs/cl_log.log')
+file_handler_sv = l.FileHandler(d.SERVER_LOG_PATH)
+file_handler_cl = l.FileHandler(d.CLIENT_LOG_PATH)
 file_handler_utils = l.FileHandler(d.UTILS_LOG_PATH)
 console_handler = l.StreamHandler()
 

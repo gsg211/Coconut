@@ -1,3 +1,4 @@
+import os
 from enum import IntEnum
 
 HEADER_POS             = slice(0,1) # slice is end exclusive, so it's really 0-0
@@ -57,9 +58,13 @@ class Operation_Header(IntEnum):
         return self.to_bytes(UDP_Size.HEADER_SZ,'big')
     
     
-CLIENT_CONFIG_PATH     = '../src/client/config.txt' 
-SERVER_CONFIG_DIR_PATH = '../src/server/saved_configs'
-UTILS_LOG_PATH = '../logs/utils_log.log'
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__)) #/src
+ROOT_DIR = os.path.dirname(BASE_DIR)                  # /
+
+CLIENT_LOG_PATH     = os.path.join(ROOT_DIR, "src", "client", "config.txt")
+SERVER_LOG_PATH = os.path.join(ROOT_DIR, "src", "server", "saved_configs")
+UTILS_LOG_PATH         = os.path.join(ROOT_DIR, "logs", "utils_log.log")
 
 class Config_Line(IntEnum):
     ID_LINE           = 0
