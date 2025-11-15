@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="a3f61069-666f-43f3-87c8-af2f8248cd53" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/debugging/logs.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/debugging/logs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UDP_packet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UDP_packet.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/defines.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/defines.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,6 +37,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "Python.ReceiveTest.executor": "Run",
     "Python.SendTest.executor": "Run",
+    "Python.SlidingWindowSender.executor": "Run",
     "Python.defines.executor": "Run",
     "Python.main.executor": "Run",
     "Python.mainB.executor": "Run",
@@ -53,8 +54,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/Testing PlayGround" />
       <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/src/Testing PlayGround" />
       <recent name="$PROJECT_DIR$/src/State Machine/States" />
       <recent name="$PROJECT_DIR$/ReadmeFiles" />
     </key>

@@ -93,7 +93,7 @@ class UDP_Packet():
         total = total & 0xFFFF # lower 16 bits
         return total.to_bytes(d.UDP_Size.CHECKSUM_CHUNK_SZ,'big')
       
-    
+
     def print_header(self):
         print(self.__custom_header)
     def print_seq_nr(self):
@@ -106,16 +106,35 @@ class UDP_Packet():
         print(self.__payload)
     def print_full(self):
         print(self.__full_message)
-        
+
     def print_everything(self):
         self.print_header()
         self.print_seq_nr()
         self.print_data_len()
         self.print_app_checksum()
         self.print_payload()
-        print()
         self.print_full()
-        
-        
-        
+
+    def print_header_decoded(self):
+        print(self.get_custom_header())
+
+    def print_seq_nr_decoded(self):
+        print(self.get_seq_nr())
+
+    def print_data_len_decoded(self):
+        print(self.get_data_len())
+
+    def print_app_checksum_decoded(self):
+        print(self.get_checksum())
+
+    def print_payload_decoded(self):
+        print(self.get_payload())
+
+    def print_everything_decoded(self):
+        self.print_header_decoded()
+        self.print_seq_nr_decoded()
+        self.print_data_len_decoded()
+        self.print_app_checksum_decoded()
+        self.print_payload_decoded()
+
         

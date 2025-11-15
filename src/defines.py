@@ -52,7 +52,7 @@ class Operation_Header(IntEnum):
     H_OP_DOWNLOAD      = 0b0100_0000
     H_OP_UPLOAD        = 0b0101_0000
     H_OP_MOVE          = 0b0110_0000
-    
+    H_DATA             = 0b0111_0000
     @property
     def as_bytes(self) -> bytes:
         return self.to_bytes(UDP_Size.HEADER_SZ,'big')
