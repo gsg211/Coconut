@@ -113,6 +113,7 @@ class UDP_Packet():
         self.print_data_len()
         self.print_app_checksum()
         self.print_payload()
+        print()
         self.print_full()
 
     def print_header_decoded(self):
