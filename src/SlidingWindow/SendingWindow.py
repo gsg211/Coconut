@@ -7,10 +7,10 @@ import defines as d
 DEFAULT_PORT_A => SENDER
 DEFAULT_PORT_B => RECEIVER
 """
-class SlidingWindowSender:
+class SendingWindow:
     def __init__(self,
-                 window_size=10,  #TODO: modify placeholder value
-                 packet_data_size=10,  #TODO: modify placeholder value
+                 window_size=2,  #TODO: modify placeholder value
+                 packet_data_size=5,  #TODO: modify placeholder value
                  sender_address = d.LOCAL_HOST_ADDR,
                  sender_port = d.DEFAULT_PORT_A,
                  destination_address = d.LOCAL_HOST_ADDR,
@@ -25,7 +25,7 @@ class SlidingWindowSender:
         self.__time_out_interval=time_out_interval
         self.__packet_loss_chance=packet_loss_chance
         self.window= [None] * window_size
-        self.packet_list=list()
+        self.packet_list : list[udp.UDP_Packet]=list()
 
     def split_input(self,data:str):
         it = iter(data)
@@ -45,14 +45,26 @@ class SlidingWindowSender:
         print(len(self.packet_list))
 
 
+    def send(self, data: str):
 
+        self.convert_data_to_packets(data)
+        self.__manager.start()
+
+        current_window_position=0
+        while current_window_position + self.__window_size <= len(self.packet_list):
+
+            for position in range(current_window_position,current_window_position + self.__window_size):
+                packet_to_send=self.packet_list[position]
+                self.__manager.q_snd_put(packet_to_send.get_full_message())
+
+            current_window_position+=self.__window_size
 
 
 
 if __name__=="__main__":
-    sender=SlidingWindowSender()
+    sender=SendingWindow()
 
-    sender.convert_data_to_packets("hello I am a very big string that needs splitting")
+    sender.send("hello I am a very big string that needs splitting")
 
     print(sender.packet_list)
     # for packet in sender.packet_list:

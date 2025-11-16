@@ -1,13 +1,13 @@
 import defines as d
 import debugging.logs as logs
 class UDP_Packet():
-    __custom_header:bytes
-    __seq_nr:bytes
-    __data_len:bytes
-    __app_checksum:bytes = b'\x00\x00'
-    __payload:bytes
-    __full_message:bytearray = bytearray(d.UDP_Size.PAYLOAD_SZ)
-    
+    # __custom_header:bytes
+    # __seq_nr:bytes
+    # __data_len:bytes
+    # __app_checksum:bytes = b'\x00\x00'
+    # __payload:bytes
+    # __full_message:bytearray = bytearray(d.UDP_Size.PAYLOAD_SZ)
+
     def __init__(self,header:int, seq_nr:int, payload:str):    
         
         header_bytes = header.to_bytes(d.UDP_Size.HEADER_SZ,'big')
@@ -38,9 +38,8 @@ class UDP_Packet():
             self.__payload = bytes(bytearray(payload_bytes) + bytearray(dif))
         else:
             self.__payload = payload_bytes
-        
-        
-        
+
+        self.__full_message = bytearray(d.UDP_Size.PAYLOAD_SZ)
         self.__app_checksum                 = bytes(d.UDP_Size.APP_CHECKSUM_SZ)
         self.__full_message[d.HEADER_POS]   = self.__custom_header
         self.__full_message[d.SEQ_NR_POS]   = self.__seq_nr
@@ -75,7 +74,8 @@ class UDP_Packet():
     def get_payload(self)->str:
         data_len = self.get_data_len()
         return self.__payload[0:data_len].decode()
-    
+    def get_full_message(self):
+        return self.__full_message
     
         
     def get_msg_as_bytes(self) ->bytes:
