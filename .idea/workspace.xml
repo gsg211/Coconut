@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="a3f61069-666f-43f3-87c8-af2f8248cd53" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SlidingWindow/SlidingWindowSender.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindow/SendingWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Testing PlayGround/ReceiveTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Testing PlayGround/ReceiveTest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UDP_packet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UDP_packet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SlidingWindow/ReceivingWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindow/ReceivingWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SlidingWindow/SendingWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindow/SendingWindow.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
