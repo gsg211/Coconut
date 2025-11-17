@@ -53,8 +53,8 @@ class SendingWindow:
         return random.random() < self.__packet_loss_chance
 
     def send_H_DONE(self,sequence_number):
-        nak_packet = udp.UDP_Packet(d.Flow_Header.H_NAK, sequence_number, '')
-        self.__manager.q_snd_put(nak_packet.get_full_message())
+        done_packet = udp.UDP_Packet(d.Flow_Header.H_DONE, sequence_number, '')
+        self.__manager.q_snd_put(done_packet.get_full_message())
 
     #sends the data using the sliding window protocol
     def send(self, data: str):

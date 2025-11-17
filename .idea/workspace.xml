@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a3f61069-666f-43f3-87c8-af2f8248cd53" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/RC Proiect.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/RC Proiect.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UDP_packet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UDP_packet.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +63,7 @@
       <recent name="$PROJECT_DIR$/ReadmeFiles" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.SendingWindow">
+  <component name="RunManager">
     <configuration name="ReceivingWindow" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="RC Proiect" />
       <option name="ENV_FILES" value="" />
@@ -72,7 +73,6 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="SDK_NAME" value="Python 3.10 (WidsScript)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/SlidingWindow" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -95,7 +95,6 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="SDK_NAME" value="Python 3.10 (WidsScript)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/SlidingWindow" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
