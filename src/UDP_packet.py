@@ -64,13 +64,13 @@ class UDP_Packet():
         self.__payload       = self.__full_message[d.PAYLOAD_POS]  
         
     def get_custom_header(self)->int:
-        return int.from_bytes(self.__custom_header)
+        return int.from_bytes(self.__custom_header,'big')
     def get_seq_nr(self)->int:
-        return int.from_bytes(self.__seq_nr)
+        return int.from_bytes(self.__seq_nr,'big')
     def get_data_len(self)->int:
-        return int.from_bytes(self.__data_len)
+        return int.from_bytes(self.__data_len,'big')
     def get_checksum(self)->int:
-        return int.from_bytes(self.__app_checksum)
+        return int.from_bytes(self.__app_checksum,'big')
     def get_payload(self)->str:
         data_len = self.get_data_len()
         return self.__payload[0:data_len].decode()
