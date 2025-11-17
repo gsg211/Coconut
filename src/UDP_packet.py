@@ -39,7 +39,7 @@ class UDP_Packet():
         else:
             self.__payload = payload_bytes
 
-        self.__full_message = bytearray(d.UDP_Size.PAYLOAD_SZ)
+        self.__full_message = bytearray(d.UDP_Size.PAYLOAD_SZ) # he
         self.__app_checksum                 = bytes(d.UDP_Size.APP_CHECKSUM_SZ)
         self.__full_message[d.HEADER_POS]   = self.__custom_header
         self.__full_message[d.SEQ_NR_POS]   = self.__seq_nr
