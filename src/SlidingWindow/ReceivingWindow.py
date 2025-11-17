@@ -46,13 +46,17 @@ class ReceivingWindow:
 
     def listen(self):
         self.__manager.start()
-        window: list[udp.UDP_Packet]
         buffer: dict[int, udp.UDP_Packet] = {}
         expected_number=1
-        total_number_of_packets=-1
-        while True:
+        h_done_received_and_acked = False
+
+
+        while not h_done_received_and_acked:
             expected_packet = self.__manager.q_rcv_get()
             if expected_packet is None:
+                if self.done_transmission:
+                    time.sleep(self.__time_out_interval * 2)
+                    h_done_received_and_acked = True
                 time.sleep(0.01)
                 continue
 
@@ -61,36 +65,46 @@ class ReceivingWindow:
             pkt.init_from_full_message(bytearray(raw_packet))
             pkt.print_everything_decoded()
 
-            if pkt.get_custom_header() == d.Flow_Header.H_DONE:
-                total_number_of_packets=pkt.get_seq_nr()
-                continue
-
             sequence_number = pkt.get_seq_nr()
+
             if sequence_number == expected_number:
                 self.packet_list.append(pkt)
                 self.send_ACK(sequence_number)
+                print(f"Receiver: Received expected packet {sequence_number}. Sending ACK {sequence_number}.")
                 expected_number+=1
 
                 while expected_number in buffer:
-                    expected_packet = buffer[expected_number]
-                    self.packet_list.append(expected_packet)
-                    buffer.pop(expected_number)
+                    buffered_pkt = buffer.pop(expected_number)
+                    self.packet_list.append(buffered_pkt)
+                    self.send_ACK(expected_number)
+                    print(f"Receiver: Processed buffered packet {expected_number}. Sending ACK {expected_number}.")
                     expected_number += 1
 
             elif sequence_number > expected_number:
-                buffer[sequence_number]=pkt
+                if sequence_number not in buffer:
+                    buffer[sequence_number]=pkt
+                    print(f"Receiver: Received out-of-order packet {sequence_number}. Buffering.")
                 for missing_number in range(expected_number,sequence_number):
-                    self.send_NAK(missing_number)
-
+                    if missing_number not in buffer:
+                        self.send_NAK(missing_number)
+                        print(f"Receiver: Sending NAK for missing packet {missing_number}.")
             else:
-                pass
+                self.send_ACK(sequence_number)
+                print(f"Receiver: Received duplicate packet {sequence_number}. Re-sending ACK {sequence_number}.")
 
-            if len(self.packet_list) == total_number_of_packets - 1 :
+            if self.packet_list and self.packet_list[-1].get_custom_header()==d.Flow_Header.H_DONE:
                 self.done_transmission=True
-                return
+                print(f"Receiver: H_DONE packet {sequence_number} received and added to list. Preparing to terminate.")
+
+
+
+        self.__manager.signal_stop()
+        print("Receiver: Transmission complete and manager signaled to stop.")
+        return
 
     def get_data(self) -> str | None:
         if self.done_transmission:
+            self.__manager.signal_stop()
             return ''.join(packet.get_payload() for packet in self.packet_list)
         return None
 
@@ -99,9 +113,4 @@ class ReceivingWindow:
 if __name__ == "__main__":
     sender = ReceivingWindow()
     sender.listen()
-    while True:
-        string=sender.get_data()
-        if string is not None:
-            print(string)
-            break
-
+    sender.get_data()
