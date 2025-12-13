@@ -32,6 +32,7 @@ class ReceivingWindow:
         self.packet_list: list[udp.UDP_Packet] = list()
         self.done_transmission=False
 
+
     def send_ACK(self, sequence_number):
         ack_packet=udp.UDP_Packet(d.Flow_Header.H_ACK,sequence_number,'')
         self.__manager.q_snd_put(ack_packet.get_full_message())
@@ -113,4 +114,4 @@ class ReceivingWindow:
 if __name__ == "__main__":
     sender = ReceivingWindow()
     sender.listen()
-    sender.get_data()
+    print(sender.get_data())
