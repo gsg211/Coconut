@@ -14,35 +14,41 @@ DEFAULT_PORT_B => RECEIVER
 """
 class ReceivingWindow:
     def __init__(self,
+                 socket_manager,
                  window_size=2,  #TODO: modify placeholder value
                  packet_data_size=5,  #TODO: modify placeholder value
-                 sender_address = d.LOCAL_HOST_ADDR,
+                 sender_address = d.LOCAL_HOST_ADDR_A,
                  sender_port = d.DEFAULT_PORT_A,
-                 destination_address = d.LOCAL_HOST_ADDR,
+                 destination_address = d.LOCAL_HOST_ADDR_B,
                  destination_port = d.DEFAULT_PORT_B,
                  time_out_interval = 0.1,  #TODO: modify placeholder value
-                 packet_loss_chance=0.0):
+                 packet_loss_chance=0.0,
+                 ):
 
         self.__window_size = window_size
         self.__packet_data_size = packet_data_size  # the max size of a packet
-        self.__manager = sm.SocketManager(destination_address, destination_port, "receiver")
-        self.__manager.set_peer_data(sender_address, sender_port)
+        self.__manager = socket_manager
+
+
+        # self.__manager = sm.SocketManager(destination_address, destination_port, "receiver")
+        # self.__manager.set_peer_data(sender_address, sender_port)
+
         self.__time_out_interval = time_out_interval
         self.__packet_loss_chance = packet_loss_chance
         self.packet_list: list[udp.UDP_Packet] = list()
         self.done_transmission=False
 
 
-    def send_ACK(self, sequence_number):
+    def __send_ACK(self, sequence_number):
         ack_packet=udp.UDP_Packet(d.Flow_Header.H_ACK,sequence_number,'')
         self.__manager.q_snd_put(ack_packet.get_full_message())
 
-    def send_NAK(self, sequence_number):
+    def __send_NAK(self, sequence_number):
         nak_packet = udp.UDP_Packet(d.Flow_Header.H_NAK, sequence_number, '')
         self.__manager.q_snd_put(nak_packet.get_full_message())
 
     # decided if packet gets lost (used to simulate real packet  loss)
-    def will_lose(self) -> bool:
+    def __will_lose(self) -> bool:
         return random.random() < self.__packet_loss_chance
 
     def start(self):
@@ -75,14 +81,14 @@ class ReceivingWindow:
 
             if sequence_number == expected_number:
                 self.packet_list.append(pkt)
-                self.send_ACK(sequence_number)
+                self.__send_ACK(sequence_number)
                 print(f"Receiver: Received expected packet {sequence_number}. Sending ACK {sequence_number}.")
                 expected_number+=1
 
                 while expected_number in buffer:
                     buffered_pkt = buffer.pop(expected_number)
                     self.packet_list.append(buffered_pkt)
-                    self.send_ACK(expected_number)
+                    self.__send_ACK(expected_number)
                     print(f"Receiver: Processed buffered packet {expected_number}. Sending ACK {expected_number}.")
                     expected_number += 1
 
@@ -92,10 +98,10 @@ class ReceivingWindow:
                     print(f"Receiver: Received out-of-order packet {sequence_number}. Buffering.")
                 for missing_number in range(expected_number,sequence_number):
                     if missing_number not in buffer:
-                        self.send_NAK(missing_number)
+                        self.__send_NAK(missing_number)
                         print(f"Receiver: Sending NAK for missing packet {missing_number}.")
             else:
-                self.send_ACK(sequence_number)
+                self.__send_ACK(sequence_number)
                 print(f"Receiver: Received duplicate packet {sequence_number}. Re-sending ACK {sequence_number}.")
 
             if self.packet_list and self.packet_list[-1].get_custom_header()==d.Flow_Header.H_DONE:
@@ -107,9 +113,16 @@ class ReceivingWindow:
         #self.__manager.signal_stop()
         return
 
+    def get_custom_headers(self) -> list[int]:
+        lst = []
+        if self.done_transmission:
+            for packet in self.packet_list:
+                lst.append(packet.get_custom_header())
+        return lst
+
+
     def get_data(self) -> str | None:
         if self.done_transmission:
-
             return ''.join(packet.get_payload() for packet in self.packet_list)
         return None
 

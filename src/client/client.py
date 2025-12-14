@@ -51,13 +51,13 @@ class I_StateMachine(ABC):
     def run(self):
         pass
     
-class Client(I_StateMachine):
-    def __init__(self):
-        super().__init__()
-        self.current_state = State_Idle()
-    
-    @override
-    def run(self):
-        self.current_state.run(self)
-         
+# class Client(I_StateMachine):
+#     def __init__(self):
+#         super().__init__()
+#         self.current_state = State_Idle()
+#
+#     @override
+#     def run(self):
+#         self.current_state.run(self)
+#
 

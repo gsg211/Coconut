@@ -66,12 +66,16 @@ CLIENT_LOG_PATH     = os.path.join(ROOT_DIR, "src", "client", "config.txt")
 SERVER_LOG_PATH = os.path.join(ROOT_DIR, "src", "server", "saved_configs")
 UTILS_LOG_PATH         = os.path.join(ROOT_DIR, "logs", "utils_log.log")
 
+
+CLIENT_ROOT_PATH = os.path.join(ROOT_DIR, "ClientStorage")
+SERVER_ROOT_PATH = os.path.join(ROOT_DIR, "ServerStorage")
 class Config_Line(IntEnum):
     ID_LINE           = 0
     WINDOW_LINE       = 1
     
     
-LOCAL_HOST_ADDR       = '127.0.0.1'
+LOCAL_HOST_ADDR_A       = '127.0.0.1'
+LOCAL_HOST_ADDR_B       = '127.0.0.2'
 DEFAULT_PORT_A        = int(8080)
 DEFAULT_PORT_B        = int(18080)
 MAX_CONNECTIONS       = int(1)

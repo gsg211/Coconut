@@ -2,20 +2,25 @@
 import defines as d
 from src.SlidingWindowProtocol.SendingWindow import SendingWindow
 from src.SlidingWindowProtocol.ReceivingWindow import ReceivingWindow
+import protocol.SocketManager as sm
 
 
 class SlidingWindowManager:
     def __init__(self,
                  window_size=2,
                  packet_data_size=5,
-                 sender_address=d.LOCAL_HOST_ADDR,
+                 sender_address=d.LOCAL_HOST_ADDR_A,
                  sender_port=d.DEFAULT_PORT_A,
-                 destination_address=d.LOCAL_HOST_ADDR,
+                 destination_address=d.LOCAL_HOST_ADDR_B,
                  destination_port=d.DEFAULT_PORT_B,
                  time_out_interval=0.1,
                  packet_loss_chance=0.0):
 
+        socket_manager = sm.SocketManager(sender_address, sender_port, "def_name")
+        socket_manager.set_peer_data(destination_address, destination_port)
+
         self._sw = SendingWindow(
+            socket_manager=socket_manager,
             window_size=window_size,
             packet_data_size=packet_data_size,
             sender_address=sender_address,
@@ -27,6 +32,7 @@ class SlidingWindowManager:
         )
 
         self._rw = ReceivingWindow(
+            socket_manager=socket_manager,
             window_size=window_size,
             packet_data_size=packet_data_size,
             sender_address=sender_address,
@@ -37,6 +43,13 @@ class SlidingWindowManager:
             packet_loss_chance=packet_loss_chance
         )
 
+    def prepare_data_packets(self, data: str) -> None:
+        self._sw.convert_data_to_packets(data)
+
+    def prepare_operation_packet(self, op_header: d.Operation_Header) -> None:
+        self._sw.prepare_operation_header(op_header)
+
+
     def listen(self):
         self._rw.listen()
 
@@ -44,6 +57,9 @@ class SlidingWindowManager:
         data = self._rw.get_data()
         return data if data else ""
 
-    def send_window(self, data: str) -> None:
-        self._sw.send(data)
+    def get_custom_headers(self) ->list[int]:
+        return self._rw.get_custom_headers()
+
+    def send_window(self) -> None:
+        self._sw.send()
 

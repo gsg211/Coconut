@@ -58,16 +58,16 @@ class I_StateMachine(ABC):
     def run(self):
         pass
     
-class Server(I_StateMachine):
-    def __init__(self):
-        super().__init__()
-        self.current_state = State_Idle()
-    
-    @override
-    def run(self):
-        self.current_state.run(self)
-        
-        
-if __name__ == '__main__':
-    my_sv = Server()
-    my_sv.run()
+# class Server(I_StateMachine):
+#     def __init__(self):
+#         super().__init__()
+#         self.current_state = State_Idle()
+#
+#     @override
+#     def run(self):
+#         self.current_state.run(self)
+#
+#
+# if __name__ == '__main__':
+#     my_sv = Server()
+#     my_sv.run()

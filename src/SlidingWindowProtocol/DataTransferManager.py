@@ -7,14 +7,19 @@ from src.SlidingWindowProtocol import SlidingWindowManager as window_manager
 class DataTransferManager:
     def __init__(self,
                  root_dir: str = "storage",
+
                  window_size=2,
                  packet_data_size=5,
-                 sender_address=d.LOCAL_HOST_ADDR,
+
+                 sender_address=d.LOCAL_HOST_ADDR_A,
                  sender_port=d.DEFAULT_PORT_A,
-                 destination_address=d.LOCAL_HOST_ADDR,
+
+                 destination_address=d.LOCAL_HOST_ADDR_B,
                  destination_port=d.DEFAULT_PORT_B,
+
                  time_out_interval=0.1,
-                 packet_loss_chance=0.0):
+                 packet_loss_chance=0.0
+                 ):
         self._storage_manager = storage_manager.StorageManager(root_dir)
 
         self._window_manager = window_manager.SlidingWindowManager(
@@ -37,8 +42,20 @@ class DataTransferManager:
     def get_data(self) -> str:
         return self._window_manager.receive_window()
 
-    def send_window(self, data: str) -> None:
-        self._window_manager.send_window(data)
+    def get_custom_headers(self) -> list[int]:
+        return self._window_manager.get_custom_headers()
+
+
+
+
+    def prepare_data_packets(self,data:str)->None:
+        self._window_manager.prepare_data_packets(data)
+
+    def prepare_operation_packet(self,op_header:d.Operation_Header)->None:
+        self._window_manager.prepare_operation_packet(op_header)
+
+    def send_prepared_packets(self) -> None:
+        self._window_manager.send_window()
 
 
 

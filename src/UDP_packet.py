@@ -1,12 +1,6 @@
 import defines as d
 import debugging.logs as logs
 class UDP_Packet():
-    # __custom_header:bytes
-    # __seq_nr:bytes
-    # __data_len:bytes
-    # __app_checksum:bytes = b'\x00\x00'
-    # __payload:bytes
-    # __full_message:bytearray = bytearray(d.UDP_Size.PAYLOAD_SZ)
 
     def __init__(self,header:int, seq_nr:int, payload:str):    
         

@@ -10,7 +10,7 @@ from queue import Queue,Empty
 from threading import Thread,Lock
 
 class SocketManager:
-    def __init__(self,addr_own:str = d.LOCAL_HOST_ADDR,port_own:int = d.DEFAULT_PORT_A,dev_name:str = d.NAME_UNDEFINED):
+    def __init__(self,addr_own:str = d.LOCAL_HOST_ADDR_A,port_own:int = d.DEFAULT_PORT_A,dev_name:str = d.NAME_UNDEFINED):
         self.__selector = sel.DefaultSelector()
         
         self.__send_queue = Queue()
@@ -22,7 +22,7 @@ class SocketManager:
         self.__mutex_own = Lock()
         
         
-        self.__peer_addr:str = d.LOCAL_HOST_ADDR
+        self.__peer_addr:str = d.LOCAL_HOST_ADDR_A
         self.__peer_port:int = d.DEFAULT_PORT_B
         # default values, can be changed
         
@@ -45,9 +45,13 @@ class SocketManager:
             return
         
         self.__sck_own = s.socket(s.AF_INET,s.SOCK_DGRAM)
+
+        self.__sck_own.setsockopt(s.SOL_SOCKET, s.SO_REUSEADDR, 1)
+
         self.__sck_own.bind((self.__addr_own,self.__port_own))
         self.__sck_own.setblocking(False)
-        
+
+
         self.__selector.register(self.__sck_own,sel.EVENT_READ)
         self.__selector.register(self.__pipe_fd_rd,sel.EVENT_READ)
         

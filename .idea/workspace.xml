@@ -8,10 +8,17 @@
       <change beforePath="$PROJECT_DIR$/.idea/RC Proiect.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/RC Proiect.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SlidingWindow/ReceivingWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindowProtocol/ReceivingWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SlidingWindow/SendingWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindowProtocol/SendingWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Testing PlayGround/ReceiveTest.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Testing PlayGround/SendTest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ServerTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ServerTest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SlidingWindowProtocol/DataTransferManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindowProtocol/DataTransferManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SlidingWindowProtocol/ReceivingWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindowProtocol/ReceivingWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SlidingWindowProtocol/SendingWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindowProtocol/SendingWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SlidingWindowProtocol/SlidingWindowManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindowProtocol/SlidingWindowManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UDP_packet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UDP_packet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/clientTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/clientTest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/defines.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/defines.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/protocol/SocketManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/protocol/SocketManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/server.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,8 +67,8 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/sabin/Files/Facultate/An 3 Home/RC Proiect",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+    "last_opened_file_path": "/home/tudor/AN3/RC/proiectrcp2025-internetprotocool",
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -87,7 +94,6 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/SlidingWindow/ReceivingWindow.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -110,7 +116,6 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/SlidingWindow/SendingWindow.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -124,7 +129,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-0978a7220b69-9867c7d4c0a4-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.28294.336" />
+        <option value="bundled-python-sdk-14705d77f0bb-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.25659.43" />
       </set>
     </attachedChunks>
   </component>
