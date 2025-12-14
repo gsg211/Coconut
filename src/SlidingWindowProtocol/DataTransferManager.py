@@ -58,6 +58,9 @@ class DataTransferManager:
         self._window_manager.send_window()
 
 
+    def stop(self):
+        self._window_manager.stop()
+
 
     def send_special_packet(self, header_type):
         packet = udp.UDP_Packet(header_type, 0, "")

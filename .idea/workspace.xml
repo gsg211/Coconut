@@ -5,20 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a3f61069-666f-43f3-87c8-af2f8248cd53" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/RC Proiect.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/RC Proiect.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ServerTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ServerTest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SlidingWindowProtocol/DataTransferManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindowProtocol/DataTransferManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SlidingWindowProtocol/ReceivingWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindowProtocol/ReceivingWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SlidingWindowProtocol/SendingWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindowProtocol/SendingWindow.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SlidingWindowProtocol/SlidingWindowManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindowProtocol/SlidingWindowManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UDP_packet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UDP_packet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Client.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/clientTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/clientTest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/defines.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/defines.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/protocol/SocketManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/protocol/SocketManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Server.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,11 +40,13 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.Client.executor": "Run",
     "Python.DataTransferManager.executor": "Run",
     "Python.ReceiveTest.executor": "Run",
     "Python.ReceivingWindow.executor": "Run",
     "Python.SendTest.executor": "Run",
     "Python.SendingWindow.executor": "Run",
+    "Python.Server.executor": "Run",
     "Python.ServerTest.executor": "Run",
     "Python.SlidingWindowManager.executor": "Run",
     "Python.SlidingWindowSender.executor": "Run",

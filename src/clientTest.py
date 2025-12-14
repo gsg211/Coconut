@@ -1,6 +1,7 @@
 from SlidingWindowProtocol import DataTransferManager as df
 from defines import *
 from client.Client import Client
+
 if __name__ == "__main__":
 
     # dm = df.DataTransferManager(
@@ -33,7 +34,39 @@ if __name__ == "__main__":
 
     client_instance = Client(config)
 
-    client_instance.startOp_view_tree()
 
-    data = client_instance.endOp_get_data()
-    print(data)
+    while True:
+        print("Select your operation:")
+        print("0 - Quit")
+
+        print("1 - Access")
+        print("2 - Create")
+        print("3 - Delete")
+        print("4 - Move")
+        print("5 - Download")
+        print("6 - Upload")
+
+        opt = int(input(''))
+
+        if opt == 0:
+            break
+        elif opt == 1:
+
+            client_instance.startOp_view_tree()
+            data = client_instance.endOp_get_data()
+            print(data)
+
+        elif opt == 2:
+            pass
+        elif opt == 3:
+            pass
+        elif opt == 4:
+            pass
+        elif opt == 5:
+            pass
+        elif opt == 6:
+            pass
+        else:
+            print("Invalid option, pick again")
+
+    client_instance.stop()

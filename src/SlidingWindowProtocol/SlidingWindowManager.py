@@ -16,11 +16,11 @@ class SlidingWindowManager:
                  time_out_interval=0.1,
                  packet_loss_chance=0.0):
 
-        socket_manager = sm.SocketManager(sender_address, sender_port, "def_name")
-        socket_manager.set_peer_data(destination_address, destination_port)
+        self.socket_manager = sm.SocketManager(sender_address, sender_port, "def_name")
+        self.socket_manager.set_peer_data(destination_address, destination_port)
 
         self._sw = SendingWindow(
-            socket_manager=socket_manager,
+            socket_manager=self.socket_manager,
             window_size=window_size,
             packet_data_size=packet_data_size,
             sender_address=sender_address,
@@ -32,7 +32,7 @@ class SlidingWindowManager:
         )
 
         self._rw = ReceivingWindow(
-            socket_manager=socket_manager,
+            socket_manager=self.socket_manager,
             window_size=window_size,
             packet_data_size=packet_data_size,
             sender_address=sender_address,
@@ -62,4 +62,7 @@ class SlidingWindowManager:
 
     def send_window(self) -> None:
         self._sw.send()
+
+    def stop(self):
+        self.socket_manager.signal_stop()
 

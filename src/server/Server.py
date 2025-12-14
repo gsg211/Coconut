@@ -1,5 +1,7 @@
 from SlidingWindowProtocol import DataTransferManager as dtm
 import defines as d
+import signal
+import sys
 
 class Server:
     def __init__(self, config:{}):
@@ -22,6 +24,15 @@ class Server:
         self.in_operation = False
 
         self.root_dir = config["root_dir"]
+        signal.signal(signal.SIGINT,self.handle_sigint)
+
+
+
+    def handle_sigint(self,signal,frame):
+        print("RECEIVED SIGINT, QUITTING")
+        self.data_manager.stop()
+        sys.exit(0)
+
 
     def endOp_view_tree(self):
         if not self.in_operation:

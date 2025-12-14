@@ -21,6 +21,9 @@ if __name__ == "__main__":
     # time.sleep(1)
     # dm.listen()
     # dm.getStorageManager().write(name,dm.get_data())
+
+    timeout = 0.2
+
     config = {}
 
     config["root_dir"] = SERVER_ROOT_PATH
@@ -34,9 +37,12 @@ if __name__ == "__main__":
     config["destination_address"] = LOCAL_HOST_ADDR_B
     config["destination_port"] = DEFAULT_PORT_B
 
-    config["time_out_interval"] = 0.2
+    config["time_out_interval"] = timeout
     config["packet_loss_chance"] = 0
 
     server_instance = Server(config)
 
-    server_instance.startOp_listen()
+    while True:
+        server_instance.startOp_listen()
+
+

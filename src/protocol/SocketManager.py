@@ -125,6 +125,7 @@ class SocketManager:
         self.__sck_own.close()
         os.close(self.__pipe_fd_rd)
         os.close(self.__pipe_fd_wr)
+        print("SOCKET MANAGER THREAD STOPPED")
                 
         
     
