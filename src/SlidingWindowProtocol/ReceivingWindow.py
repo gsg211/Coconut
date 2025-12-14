@@ -45,12 +45,17 @@ class ReceivingWindow:
     def will_lose(self) -> bool:
         return random.random() < self.__packet_loss_chance
 
-    def listen(self):
+    def start(self):
         self.__manager.start()
+
+    def listen(self):
+        if not self.__manager.is_started:
+            self.__manager.start()
         buffer: dict[int, udp.UDP_Packet] = {}
         expected_number=1
         h_done_received_and_acked = False
-
+        self.done_transmission = False
+        self.packet_list.clear()
 
         while not h_done_received_and_acked:
             expected_packet = self.__manager.q_rcv_get()
@@ -99,13 +104,12 @@ class ReceivingWindow:
 
 
 
-        self.__manager.signal_stop()
-        print("Receiver: Transmission complete and manager signaled to stop.")
+        #self.__manager.signal_stop()
         return
 
     def get_data(self) -> str | None:
         if self.done_transmission:
-            self.__manager.signal_stop()
+
             return ''.join(packet.get_payload() for packet in self.packet_list)
         return None
 

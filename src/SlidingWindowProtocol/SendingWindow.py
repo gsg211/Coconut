@@ -42,6 +42,7 @@ class SendingWindow:
     def convert_data_to_packets(self, data:str):
         string_list=self.split_input(data)
         sequence_counter=1
+        self.packet_list.clear()
         for string in string_list:
             packet_to_send=udp.UDP_Packet(d.Operation_Header.H_DATA,sequence_counter,string)
             packet_to_send.print_payload_decoded()
@@ -56,10 +57,16 @@ class SendingWindow:
         done_packet = udp.UDP_Packet(d.Flow_Header.H_DONE, sequence_number, '')
         self.__manager.q_snd_put(done_packet.get_full_message())
 
+
+    def start(self):
+       self.__manager.start()
+
     #sends the data using the sliding window protocol
     def send(self, data: str):
         self.convert_data_to_packets(data)
-        self.__manager.start()
+
+        if not self.__manager.is_started:
+            self.__manager.start()
 
         base = 1
         next_seq_num = 1
@@ -132,8 +139,9 @@ class SendingWindow:
 
             time.sleep(0.01)
 
-        self.__manager.signal_stop()
+
         print("Sender: All packets sent and acknowledged.")
+
 
 
 

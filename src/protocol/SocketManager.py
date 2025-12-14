@@ -27,7 +27,7 @@ class SocketManager:
         # default values, can be changed
         
         self.is_init = False
-        
+        self.is_started = False
         self.__pipe_fd_rd, self.__pipe_fd_wr= os.pipe()
         
         self.__is_signaled = False
@@ -76,8 +76,8 @@ class SocketManager:
         
     def start(self):
         self.__initialize()
-        
         self.__reactor_thr.start()
+        self.is_started = True
             
         
     def __worker(self):

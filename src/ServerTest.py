@@ -16,4 +16,5 @@ if __name__ == "__main__":
     dm.listen()
     name = dm.get_data()
     time.sleep(1)
+    dm.listen()
     dm.getStorageManager().write(name,dm.get_data())
