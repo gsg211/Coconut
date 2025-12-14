@@ -82,7 +82,13 @@ class SocketManager:
         self.__initialize()
         self.__reactor_thr.start()
         self.is_started = True
-            
+
+    def flush_receive_queue(self):
+        while not self.__receive_queue.empty():
+            try:
+                self.__receive_queue.get_nowait()
+            except Empty:
+                break
         
     def __worker(self):
         while not self.__is_signaled:

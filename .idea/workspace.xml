@@ -8,7 +8,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ServerTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ServerTest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SlidingWindowProtocol/DataTransferManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindowProtocol/DataTransferManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SlidingWindowProtocol/ReceivingWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindowProtocol/ReceivingWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SlidingWindowProtocol/SendingWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindowProtocol/SendingWindow.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SlidingWindowProtocol/SlidingWindowManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindowProtocol/SlidingWindowManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SlidingWindowProtocol/StorageManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindowProtocol/StorageManager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/Client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Client.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/clientTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/clientTest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/protocol/SocketManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/protocol/SocketManager.py" afterDir="false" />

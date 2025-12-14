@@ -51,12 +51,18 @@ class DataTransferManager:
     def prepare_data_packets(self,data:str)->None:
         self._window_manager.prepare_data_packets(data)
 
-    def prepare_operation_packet(self,op_header:d.Operation_Header)->None:
-        self._window_manager.prepare_operation_packet(op_header)
+    def prepare_operation_packet(self,custom_header:int)->None:
+        self._window_manager.prepare_operation_packet(custom_header)
 
     def send_prepared_packets(self) -> None:
         self._window_manager.send_window()
 
+    def clear_sending_packet_list(self):
+        self._window_manager.clear_sending_packet_list()
+
+
+    def clear_receiving_queue(self):
+        self._window_manager.socket_manager.flush_receive_queue()
 
     def stop(self):
         self._window_manager.stop()

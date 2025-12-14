@@ -46,8 +46,11 @@ class SlidingWindowManager:
     def prepare_data_packets(self, data: str) -> None:
         self._sw.convert_data_to_packets(data)
 
-    def prepare_operation_packet(self, op_header: d.Operation_Header) -> None:
-        self._sw.prepare_operation_header(op_header)
+    def prepare_operation_packet(self, custom_header: int) -> None:
+        self._sw.prepare_operation_header(custom_header)
+
+    def clear_sending_packet_list(self):
+        self._sw.clear_packet_list()
 
 
     def listen(self):

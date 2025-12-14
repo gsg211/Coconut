@@ -57,7 +57,11 @@ if __name__ == "__main__":
             print(data)
 
         elif opt == 2:
-            pass
+            print("SELECTED CREATE")
+            client_instance.startOp_create_file("testDir/testFile")
+            data = client_instance.endOp_get_data()
+            print(data)
+
         elif opt == 3:
             pass
         elif opt == 4:

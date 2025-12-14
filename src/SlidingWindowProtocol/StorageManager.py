@@ -10,14 +10,15 @@ class StorageManager:
         if not os.path.exists(self._root_dir):
             os.makedirs(self._root_dir)
 
-    def create_file(self, relative_path: str) -> None:
-        full_path = os.path.join(self._root_dir, relative_path)
-        os.makedirs(os.path.dirname(full_path), exist_ok=True)
+    def create_file(self, relative_path: str) -> bool:
         try:
+            full_path = os.path.join(self._root_dir, relative_path)
+            os.makedirs(os.path.dirname(full_path), exist_ok=True)
             with open(full_path, 'a'):
                 os.utime(full_path, None)
+                return True
         except OSError:
-            pass
+            return False
 
     def make_directory(self, relative_path: str) -> None:
         full_path = os.path.join(self._root_dir, relative_path)

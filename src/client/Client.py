@@ -1,3 +1,5 @@
+import time
+
 from SlidingWindowProtocol import DataTransferManager as dtm
 import defines as d
 import signal
@@ -36,8 +38,27 @@ class Client:
         if self.in_operation:
             return
         self.in_operation = True
+
         self.data_manager.prepare_operation_packet(d.Operation_Header.H_OP_ACCESS)
         self.data_manager.send_prepared_packets()
+        self.data_manager.clear_sending_packet_list()
+
+    def startOp_create_file(self,file_path:str):
+        if self.in_operation:
+            return
+        self.in_operation = True
+
+        self.data_manager.clear_sending_packet_list()
+        self.data_manager.prepare_operation_packet(d.Operation_Header.H_OP_CREATE)
+        self.data_manager.send_prepared_packets()
+
+        time.sleep(0.2)
+
+        self.data_manager.clear_sending_packet_list()
+        self.data_manager.prepare_data_packets(file_path)
+        self.data_manager.send_prepared_packets()
+
+
 
     def endOp_get_data(self)->str:
         if not self.in_operation:
@@ -45,6 +66,20 @@ class Client:
         self.data_manager.listen()
         data = self.data_manager.get_data()
         self.in_operation = False
+
+        headers = self.data_manager.get_custom_headers()
+        while True:
+            if d.Flow_Header.H_OP_SUCCESS in headers:
+                print("OPERATION SUCCESS")
+                break
+            elif d.Flow_Header.H_OP_FAILED in headers:
+                print("OPERATION FAILED")
+                break
+            else:
+                print(headers)
+                self.data_manager.listen()
+                headers = self.data_manager.get_custom_headers()
+
         return data
 
 

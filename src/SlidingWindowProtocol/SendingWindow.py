@@ -61,10 +61,14 @@ class SendingWindow:
         done_packet = udp.UDP_Packet(d.Flow_Header.H_DONE, sequence_number, '')
         self.__manager.q_snd_put(done_packet.get_full_message())
 
-    def prepare_operation_header(self,header_type:d.Operation_Header):
+    def prepare_operation_header(self,custom_header:int):
         sequence_counter = 1
-        packet_to_send = udp.UDP_Packet(header_type,sequence_counter,"")
+        packet_to_send = udp.UDP_Packet(custom_header,sequence_counter,"")
         self.packet_list.append(packet_to_send)
+
+    def clear_packet_list(self):
+        self.packet_list = []
+
 
     def start(self):
        self.__manager.start()

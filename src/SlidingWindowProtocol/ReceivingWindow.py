@@ -118,12 +118,14 @@ class ReceivingWindow:
         if self.done_transmission:
             for packet in self.packet_list:
                 lst.append(packet.get_custom_header())
+
         return lst
 
 
     def get_data(self) -> str | None:
         if self.done_transmission:
-            return ''.join(packet.get_payload() for packet in self.packet_list)
+            data = ''.join(packet.get_payload() for packet in self.packet_list)
+            return data
         return None
 
 
