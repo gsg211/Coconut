@@ -45,9 +45,6 @@ class DataTransferManager:
     def get_custom_headers(self) -> list[int]:
         return self._window_manager.get_custom_headers()
 
-
-
-
     def prepare_data_packets(self,data:str)->None:
         self._window_manager.prepare_data_packets(data)
 
