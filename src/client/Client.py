@@ -59,6 +59,31 @@ class Client:
         self.data_manager.send_prepared_packets()
 
 
+    def startOp_upload_file(self,file_path:str):
+        if not self.data_manager.getStorageManager().find(file_path):
+            return
+
+        # sends filepath
+        self.data_manager.clear_sending_packet_list()
+        self.data_manager.prepare_data_packets(file_path)
+        self.data_manager.prepare_operation_packet(d.Operation_Header.H_OP_UPLOAD)
+        self.data_manager.send_prepared_packets()
+
+        self.data_manager.clear_sending_packet_list()
+        file_data = self.data_manager.getStorageManager().read(file_path)
+        self.data_manager.prepare_data_packets(file_data)
+        self.data_manager.prepare_operation_packet(d.Operation_Header.H_OP_UPLOAD)
+        self.data_manager.send_prepared_packets()
+
+    def startOp_download_file(self,file_path:str):
+        pass
+
+    def startOp_move_file(self, file_path: str):
+        pass
+
+    def startOp_delete_file(self, file_path: str):
+        pass
+
 
     def endOp_get_data(self)->str:
         if not self.in_operation:

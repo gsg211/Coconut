@@ -14,7 +14,7 @@ class StorageManager:
         try:
             full_path = os.path.join(self._root_dir, relative_path)
             os.makedirs(os.path.dirname(full_path), exist_ok=True)
-            with open(full_path, 'a'):
+            with open(full_path, 'w'):
                 os.utime(full_path, None)
                 return True
         except OSError:
