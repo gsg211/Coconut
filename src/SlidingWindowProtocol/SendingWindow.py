@@ -45,11 +45,11 @@ class SendingWindow:
     #converts the string into a list of packets
     def convert_data_to_packets(self, data:str):
         string_list=self.__split_input(data)
-        sequence_counter=1
+        sequence_counter=len(self.packet_list) + 1
         self.packet_list.clear()
         for string in string_list:
             packet_to_send=udp.UDP_Packet(d.Operation_Header.H_DATA,sequence_counter,string)
-            packet_to_send.print_payload_decoded()
+            # packet_to_send.print_payload_decoded()
             self.packet_list.append(packet_to_send)
             sequence_counter+=1
 
@@ -62,7 +62,7 @@ class SendingWindow:
         self.__manager.q_snd_put(done_packet.get_full_message())
 
     def prepare_operation_header(self,custom_header:int):
-        sequence_counter = 1
+        sequence_counter = len(self.packet_list) + 1
         packet_to_send = udp.UDP_Packet(custom_header,sequence_counter,"")
         self.packet_list.append(packet_to_send)
 
@@ -93,9 +93,10 @@ class SendingWindow:
                 packet_to_send = self.packet_list[next_seq_num - 1]
                 if not self.__will_lose():
                     self.__manager.q_snd_put(packet_to_send.get_full_message())
-                    print(f"Sender: Sent packet {packet_to_send.get_seq_nr()}")
+                    # print(f"Sender: Sent packet {packet_to_send.get_seq_nr()}")
                 else:
-                    print(f"Sender: Simulating loss of packet {packet_to_send.get_seq_nr()}")
+                    pass
+                    # print(f"Sender: Simulating loss of packet {packet_to_send.get_seq_nr()}")
                 last_seen_time[next_seq_num] = time.time()
                 next_seq_num += 1
 
@@ -103,7 +104,7 @@ class SendingWindow:
             if next_seq_num > total_packets and not done_sending_data:
                 self.__send_H_DONE(total_packets + 1)
                 last_seen_time[total_packets + 1] = time.time()
-                print(f"Sender: Sent H_DONE with sequence number {total_packets + 1}")
+                # print(f"Sender: Sent H_DONE with sequence number {total_packets + 1}")
                 done_sending_data = True
 
 
@@ -114,21 +115,21 @@ class SendingWindow:
                 raw_packet, (addr, port) = received_packet
                 pkt = udp.UDP_Packet.__new__(udp.UDP_Packet)
                 pkt.init_from_full_message(bytearray(raw_packet))
-                pkt.print_everything_decoded()
+                # pkt.print_everything_decoded()
                 seq = pkt.get_seq_nr()
 
                 if pkt.get_custom_header() == d.Flow_Header.H_ACK:
-                    print(f"Sender: Received ACK for {seq}")
+                    # print(f"Sender: Received ACK for {seq}")
                     if seq == total_packets + 1:
                         done_transmission_ack = True
-                        print("Sender: Received ACK for H_DONE. Transmission complete.")
+                        # print("Sender: Received ACK for H_DONE. Transmission complete.")
                     elif base <= seq <= total_packets:
                         acked_packets[seq] = True
                         while base <= total_packets and acked_packets[base]:
-                            print(f"Sender: Advanced base to {base + 1}")
+                            # print(f"Sender: Advanced base to {base + 1}")
                             base += 1
                 elif pkt.get_custom_header() == d.Flow_Header.H_NAK:
-                    print(f"Sender: Received NAK for {seq}. Retransmitting packet {seq}.")
+                    # print(f"Sender: Received NAK for {seq}. Retransmitting packet {seq}.")
                     if base <= seq <= total_packets:
                         packet_to_retransmit = self.packet_list[seq - 1]
                         self.__manager.q_snd_put(packet_to_retransmit.get_full_message())
@@ -137,7 +138,7 @@ class SendingWindow:
 
                 for seq_num in range(base, next_seq_num):
                     if not acked_packets[seq_num] and (current_time - last_seen_time.get(seq_num, 0)) > self.__time_out_interval:
-                        print(f"Sender: Timeout for packet {seq_num}. Retransmitting.")
+                        # print(f"Sender: Timeout for packet {seq_num}. Retransmitting.")
                         packet_to_retransmit = self.packet_list[seq_num - 1]
                         self.__manager.q_snd_put(packet_to_retransmit.get_full_message())
                         last_seen_time[seq_num] = time.time()
@@ -145,12 +146,12 @@ class SendingWindow:
                 if done_sending_data and not done_transmission_ack and (current_time - last_seen_time.get(total_packets + 1, 0)) > self.__time_out_interval:
                     self.__send_H_DONE(total_packets + 1)
                     last_seen_time[total_packets + 1] = time.time()
-                    print(f"Sender: Timeout for H_DONE. Retransmitting H_DONE with sequence number {total_packets + 1}.")
+                    # print(f"Sender: Timeout for H_DONE. Retransmitting H_DONE with sequence number {total_packets + 1}.")
 
             time.sleep(0.01)
 
 
-        print("Sender: All packets sent and acknowledged.")
+        # print("Sender: All packets sent and acknowledged.")
 
 
 
@@ -161,7 +162,7 @@ if __name__=="__main__":
 
     sender.send("hello I am a very big string that needs splitting")
 
-    print(sender.packet_list)
+    # print(sender.packet_list)
     # for packet in sender.packet_list:
     #     print(packet.print_everything())
     #     print()

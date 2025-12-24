@@ -75,38 +75,38 @@ class ReceivingWindow:
             raw_packet, (addr, port) = expected_packet
             pkt = udp.UDP_Packet.__new__(udp.UDP_Packet)
             pkt.init_from_full_message(bytearray(raw_packet))
-            pkt.print_everything_decoded()
+            # pkt.print_everything_decoded()
 
             sequence_number = pkt.get_seq_nr()
 
             if sequence_number == expected_number:
                 self.packet_list.append(pkt)
                 self.__send_ACK(sequence_number)
-                print(f"Receiver: Received expected packet {sequence_number}. Sending ACK {sequence_number}.")
+                # print(f"Receiver: Received expected packet {sequence_number}. Sending ACK {sequence_number}.")
                 expected_number+=1
 
                 while expected_number in buffer:
                     buffered_pkt = buffer.pop(expected_number)
                     self.packet_list.append(buffered_pkt)
                     self.__send_ACK(expected_number)
-                    print(f"Receiver: Processed buffered packet {expected_number}. Sending ACK {expected_number}.")
+                    # print(f"Receiver: Processed buffered packet {expected_number}. Sending ACK {expected_number}.")
                     expected_number += 1
 
             elif sequence_number > expected_number:
                 if sequence_number not in buffer:
                     buffer[sequence_number]=pkt
-                    print(f"Receiver: Received out-of-order packet {sequence_number}. Buffering.")
+                    # print(f"Receiver: Received out-of-order packet {sequence_number}. Buffering.")
                 for missing_number in range(expected_number,sequence_number):
                     if missing_number not in buffer:
                         self.__send_NAK(missing_number)
-                        print(f"Receiver: Sending NAK for missing packet {missing_number}.")
+                        # print(f"Receiver: Sending NAK for missing packet {missing_number}.")
             else:
                 self.__send_ACK(sequence_number)
-                print(f"Receiver: Received duplicate packet {sequence_number}. Re-sending ACK {sequence_number}.")
+                # print(f"Receiver: Received duplicate packet {sequence_number}. Re-sending ACK {sequence_number}.")
 
             if self.packet_list and self.packet_list[-1].get_custom_header()==d.Flow_Header.H_DONE:
                 self.done_transmission=True
-                print(f"Receiver: H_DONE packet {sequence_number} received and added to list. Preparing to terminate.")
+                # print(f"Receiver: H_DONE packet {sequence_number} received and added to list. Preparing to terminate.")
 
 
 
@@ -133,4 +133,4 @@ class ReceivingWindow:
 if __name__ == "__main__":
     sender = ReceivingWindow()
     sender.listen()
-    print(sender.get_data())
+    # print(sender.get_data())

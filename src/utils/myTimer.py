@@ -20,7 +20,7 @@ class myTimer():
             if self.value >= self.notify_threshold:
                 self.value = 0
                 self.notifications +=1
-                print('notify')
+                # print('notify')
         
         time.sleep(self.step_in_seconds)
         

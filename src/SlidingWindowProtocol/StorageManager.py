@@ -35,11 +35,18 @@ class StorageManager:
         full_path = os.path.join(self._root_dir, relative_path)
         return os.path.exists(full_path)
 
-    def write(self, relative_path: str, data: str) -> None:
+    def write(self, relative_path: str, data: str) -> bool:
         full_path = os.path.join(self._root_dir, relative_path)
-        os.makedirs(os.path.dirname(full_path), exist_ok=True)
+        try:
+            os.makedirs(os.path.dirname(full_path), exist_ok=True)
+        except OSError:
+            return False
         with open(full_path, 'w') as f:
-            f.write(data)
+            try:
+                f.write(data)
+                return True
+            except OSError:
+                return False
 
     def list_files(self, relative_path: str) -> str:
         full_path = os.path.join(self._root_dir, relative_path)
@@ -68,6 +75,15 @@ class StorageManager:
             for f in files:
                 tree_str.append(f"{subindent}{f}")
         return "\n".join(tree_str)
+
+    def remove_file(self,path:str) -> bool:
+        start_path = os.path.join(self._root_dir,path)
+        try:
+            os.remove(start_path)
+            return True
+        except OSError:
+            return False
+
 
 
 if __name__ == "__main__":
