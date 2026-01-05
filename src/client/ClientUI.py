@@ -2,7 +2,7 @@ from ClientCode import Client
 import sys
 import defines as d
 from PyQt5.QtCore import Qt,QSize
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon,QColor
 from PyQt5.QtWidgets import *
 
 resource_path= "../../Resources/"
@@ -62,27 +62,21 @@ def upload(client_instance: Client):
 if __name__ == '__main__':
 
 
-
     config = {}
-
     config["root_dir"] = d.CLIENT_ROOT_PATH
-
     config["window_size"] = 2
     config["packet_data_size"] = 5
-
-    config[
-        "sender_address"] = d.LOCAL_HOST_ADDR_B
+    config["sender_address"] = d.LOCAL_HOST_ADDR_B
     config["sender_port"] = d.DEFAULT_PORT_B
-
     config["destination_address"] = d.LOCAL_HOST_ADDR_A
     config["destination_port"] = d.DEFAULT_PORT_A
-
     config["time_out_interval"] = 0.3
     config["packet_loss_chance"] = 0
 
     client = Client(config)
 
-
+    # backround:#1a1a1e
+    # text: #222327
 
     button_style=load_button_stylesheet()
     icon_size = 40
@@ -90,10 +84,10 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = QWidget()
     palette = window.palette()
-    palette.setColor(window.backgroundRole(), Qt.black)
+    palette.setColor(window.backgroundRole(), QColor("ds"))
     window.setPalette(palette)
 
-    window.setStyleSheet("color: white; background-color: black;")
+    window.setStyleSheet("color: white; background-color: #1e2124;")
 
     window.setWindowTitle('Client UI')
     window.setGeometry(100, 100, 800, 700)
@@ -103,7 +97,7 @@ if __name__ == '__main__':
     quote = QLabel()
     text_field = QTextEdit()
 
-    text_field.setStyleSheet("background-color: #3d3d3d; color: white;")
+    text_field.setStyleSheet("background-color: #36393e; color: white;")
 
 
     acces_btn = QCommandLinkButton("View Tree")
@@ -115,7 +109,7 @@ if __name__ == '__main__':
     create_btn = QCommandLinkButton("Create New File")
     create_btn.clicked.connect(lambda: create(client))
     create_btn.setStyleSheet(button_style)
-    create_btn.setIcon(QIcon(f"{resource_path}/Icons/create2.png"))
+    create_btn.setIcon(QIcon(f"{resource_path}/Icons/create.png"))
     create_btn.setIconSize(QSize(icon_size,icon_size))
 
     delete_btn = QCommandLinkButton("Delete file")

@@ -5,15 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a3f61069-666f-43f3-87c8-af2f8248cd53" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Resources/Icons/create2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/RC Proiect.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/RC Proiect.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientStorage/TestUpload/testFile.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientStorage/misc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientStorage/test_dir/myfile.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientStorage/test_dir/test.text" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/ClientCode.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/ClientUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/ClientUI.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
