@@ -8,7 +8,6 @@ from PyQt5.QtWidgets import *
 resource_path= "../../Resources/"
 
 
-
 def load_button_stylesheet():
     file_path = f"{resource_path}/ButtonStyle.css"
 
@@ -75,8 +74,6 @@ if __name__ == '__main__':
 
     client = Client(config)
 
-    # backround:#1a1a1e
-    # text: #222327
 
     button_style=load_button_stylesheet()
     icon_size = 40
@@ -93,12 +90,15 @@ if __name__ == '__main__':
     window.setGeometry(100, 100, 800, 700)
 
 
-    quote_text = QLabel("Hello")
-    quote = QLabel()
-    text_field = QTextEdit()
+    File_path_label = QLabel("Enter file path here:")
 
-    text_field.setStyleSheet("background-color: #36393e; color: white;")
+    Output_label = QLabel("Output: ")
 
+
+    outputText = QTextBrowser()
+    outputText.setStyleSheet("background-color: #36393e; color: white;")
+    file_path_text_box = QLineEdit()
+    file_path_text_box.setStyleSheet("background-color: #36393e; color: white;")
 
     acces_btn = QCommandLinkButton("View Tree")
     acces_btn.clicked.connect(lambda: view_tree(client))
@@ -139,9 +139,10 @@ if __name__ == '__main__':
 
     layout = QVBoxLayout()
     layout.setAlignment(Qt.AlignTop)
-
-    layout.addWidget(quote_text)
-    layout.addWidget(text_field)
+    layout.addWidget(Output_label)
+    layout.addWidget(outputText)
+    layout.addWidget(File_path_label)
+    layout.addWidget(file_path_text_box)
     layout.addWidget(acces_btn)
     layout.addWidget(create_btn)
     layout.addWidget(delete_btn)
