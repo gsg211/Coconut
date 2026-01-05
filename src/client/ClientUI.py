@@ -1,12 +1,50 @@
 import sys
 from ClientCode import Client
 import defines as d
+from PyQt5.QtCore import QThread, pyqtSignal
 
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QIcon, QColor, QFont
 from PyQt5.QtWidgets import *
 
 resource_path = "../../Resources/"
+
+
+
+
+class ClientWorker(QThread):
+    result_ready = pyqtSignal(str)
+    error_occurred = pyqtSignal(str)
+
+    def __init__(self, client, op_name, *args):
+        super().__init__()
+        self.client = client
+        self.op_name = op_name
+        self.args = args
+
+    def run(self):
+        try:
+            if self.op_name == "view":
+                self.client.startOp_view_tree()
+            elif self.op_name == "create":
+                self.client.startOp_create_file(*self.args)
+            elif self.op_name == "delete":
+                self.client.startOp_delete_file(*self.args)
+            elif self.op_name == "move":
+                self.client.startOp_move_file(*self.args)
+            elif self.op_name == "download":
+                self.client.startOp_download_file(*self.args)
+            elif self.op_name == "upload":
+                self.client.startOp_upload_file(*self.args)
+
+            data = self.client.endOp_get_data()
+
+
+            self.result_ready.emit(data)
+        except Exception as e:
+            self.error_occurred.emit(str(e))
+
+
 
 
 def load_button_stylesheet():
@@ -24,6 +62,7 @@ class ClientWindow(QWidget):
         self.client = client
         self.button_style = load_button_stylesheet()
         self.icon_size = 40
+        self.worker=None
         self.init_ui()
 
     def init_ui(self):
@@ -88,38 +127,75 @@ class ClientWindow(QWidget):
         self.output_text.clear()
         self.output_text.setText(result)
 
+    def run_operation(self, op_name, *args):
+        """Starts the background thread"""
+        self.write_result(f"Executing {op_name.upper()}... please wait.")
+        self.set_ui_enabled(False)
+
+
+        self.worker = ClientWorker(self.client, op_name, *args)
+
+        self.worker.result_ready.connect(self.on_operation_success)
+        self.worker.error_occurred.connect(self.on_operation_error)
+        self.worker.start()
+
+    def on_operation_success(self, data):
+        self.write_result(data)
+        self.set_ui_enabled(True)
+
+    def on_operation_error(self, err):
+        self.write_result(f"CRITICAL ERROR: {err}")
+        self.set_ui_enabled(True)
+
+
 
     def view_tree(self):
-        self.client.startOp_view_tree()
-        data = self.client.endOp_get_data()
-        self.write_result(data)
+        self.run_operation("view")
 
     def create_file(self):
-        self.client.startOp_create_file(self.get_file_path())
-        data = self.client.endOp_get_data()
-        self.write_result(data)
+        path = self.get_file_path()
+        if path:
+            self.run_operation("create", path)
 
     def delete_file(self):
-        self.client.startOp_delete_file(self.get_file_path())
-        data = self.client.endOp_get_data()
-        self.write_result(data)
+        path = self.get_file_path()
+        if path:
+            self.run_operation("delete", path)
 
     def move_file(self):
         filepaths = self.get_file_path().split(" ")
-        self.client.startOp_move_file(filepaths[0], filepaths[1])
-        data = self.client.endOp_get_data()
-        self.write_result(data)
+        if len(filepaths) >= 2:
+            self.run_operation("move", filepaths[0], filepaths[1])
+        else:
+            self.write_result("Error: Provide 'source destination'")
 
     def download_file(self):
-        self.client.startOp_download_file(self.get_file_path())
-        data = self.client.endOp_get_data()
-        self.write_result(data)
+        path = self.get_file_path()
+        if path:
+            self.run_operation("download", path)
 
     def upload_file(self):
         filepaths = self.get_file_path().split(" ")
-        self.client.startOp_upload_file(filepaths[0],filepaths[1])
-        data = self.client.endOp_get_data()
-        self.write_result(data)
+        if len(filepaths) >= 2:
+            self.run_operation("upload", filepaths[0], filepaths[1])
+        else:
+            self.write_result("Error: Provide 'source destination'")
+
+    def write_result(self, result: str):
+        self.output_text.clear()
+        self.output_text.setText(result)
+
+    def get_file_path(self) -> str:
+        return self.file_path_text_box.text()
+
+    def set_ui_enabled(self, enabled: bool):
+        self.view_btn.setEnabled(enabled)
+        self.create_btn.setEnabled(enabled)
+        self.delete_btn.setEnabled(enabled)
+        self.move_btn.setEnabled(enabled)
+        self.download_btn.setEnabled(enabled)
+        self.upload_btn.setEnabled(enabled)
+        self.file_path_text_box.setEnabled(enabled)
 
 
 
