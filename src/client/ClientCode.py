@@ -196,7 +196,7 @@ if __name__ == "__main__":
         print("5 - Download")
         print("6 - Upload")
 
-        opt = int(input(''))
+        opt = int(input('>>'))
 
         if opt == 0:
             break

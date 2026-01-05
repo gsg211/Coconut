@@ -5,17 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a3f61069-666f-43f3-87c8-af2f8248cd53" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Resources/Icons/create2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/RC Proiect.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/RC Proiect.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServerStorage/NewFile.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServerStorage/testDir/testFile" beforeDir="false" afterPath="$PROJECT_DIR$/ServerStorage/testDir/testFile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ClientTest.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ServerTest.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SlidingWindowProtocol/ReceivingWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindowProtocol/ReceivingWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SlidingWindowProtocol/SendingWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindowProtocol/SendingWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SlidingWindowProtocol/StorageManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindowProtocol/StorageManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/myTimer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/myTimer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientStorage/TestUpload/testFile.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientStorage/misc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientStorage/test_dir/myfile.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientStorage/test_dir/test.text" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/ClientCode.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +34,9 @@
   &quot;associatedIndex&quot;: 1
 }</component>
   <component name="ProjectId" id="34y5wqXUKM9qdDCcPZU6FeVq9WE" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -44,7 +45,9 @@
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "Python.Client.executor": "Run",
+    "Python.ClientCode.executor": "Run",
     "Python.ClientTest.executor": "Run",
+    "Python.ClientUI.executor": "Run",
     "Python.DataTransferManager.executor": "Run",
     "Python.ReceiveTest.executor": "Run",
     "Python.ReceivingWindow.executor": "Run",
@@ -67,17 +70,21 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/tudor/AN3/RC/proiectrcp2025-internetprotocool",
+    "last_opened_file_path": "/home/sabin/Files/Facultate/An 3 Home/RC Proiect/Resources/Icons",
     "settings.editor.selected.configurable": "preferences.keymap"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Resources/Icons" />
+      <recent name="$PROJECT_DIR$/Resources" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Resources/Icons" />
       <recent name="$PROJECT_DIR$/ClientStorage" />
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/src/Testing PlayGround" />
       <recent name="$PROJECT_DIR$/src/State Machine/States" />
-      <recent name="$PROJECT_DIR$/ReadmeFiles" />
     </key>
   </component>
   <component name="RunManager">
@@ -94,6 +101,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/SlidingWindow/ReceivingWindow.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -116,6 +124,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/SlidingWindow/SendingWindow.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
