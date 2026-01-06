@@ -114,14 +114,11 @@ class Client:
         self.data_manager.prepare_operation_packet(d.Operation_Header.H_OP_MOVE)
         self.data_manager.send_prepared_packets()
 
+        combined_paths = f"{src_path.strip()}|{dst_path.strip()}"
         self.data_manager.clear_sending_packet_list()
-        self.data_manager.prepare_data_packets(src_path)
+        self.data_manager.prepare_data_packets(combined_paths)
         self.data_manager.send_prepared_packets()
-
-        self.data_manager.clear_sending_packet_list()
-        self.data_manager.prepare_data_packets(dst_path)
-        self.data_manager.send_prepared_packets()
-
+        return None
 
     def startOp_delete_file(self, file_path: str):
         if self.in_operation:

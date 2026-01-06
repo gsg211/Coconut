@@ -62,7 +62,7 @@ class ClientWindow(QWidget):
         self.client = client
         self.button_style = load_button_stylesheet()
         self.icon_size = 40
-        self.worker=None
+        self.worker = None
         self.init_ui()
 
     def init_ui(self):
@@ -73,7 +73,6 @@ class ClientWindow(QWidget):
         layout = QVBoxLayout()
         layout.setAlignment(Qt.AlignTop)
 
-
         self.output_label = QLabel("Output:")
         self.output_label.setFont(QFont("Consolas", 12))
 
@@ -81,28 +80,36 @@ class ClientWindow(QWidget):
         self.output_text.setFont(QFont("Consolas", 12))
         self.output_text.setStyleSheet("background-color: #36393e; color: white;")
 
+        self.source_path_label = QLabel("Source Path:")
+        self.source_path_label.setFont(QFont("Consolas", 12))
 
-        self.file_path_label = QLabel("Enter file path here:")
-        self.file_path_label.setFont(QFont("Consolas", 12))
+        self.destination_path_label = QLabel("Destination Path:")
+        self.destination_path_label.setFont(QFont("Consolas", 12))
 
-        self.file_path_text_box = QLineEdit()
-        self.file_path_text_box.setMinimumHeight(50)
-        self.file_path_text_box.setFont(QFont("Consolas", 12))
-        self.file_path_text_box.setStyleSheet("background-color: #36393e; color: white;" )
+        self.source_path_text_box = QLineEdit()
+        self.source_path_text_box.setMinimumHeight(50)
+        self.source_path_text_box.setFont(QFont("Consolas", 12))
+        self.source_path_text_box.setStyleSheet("background-color: #36393e; color: white;")
 
+        self.destination_path_text_box = QLineEdit()
+        self.destination_path_text_box.setMinimumHeight(50)
+        self.destination_path_text_box.setFont(QFont("Consolas", 12))
+        self.destination_path_text_box.setStyleSheet("background-color: #36393e; color: white;")
 
+        # Buttons
         self.view_btn = self.create_button("View Tree", "Icons/view tree.png", self.view_tree)
         self.create_btn = self.create_button("Create New File", "Icons/create.png", self.create_file)
         self.delete_btn = self.create_button("Delete File", "Icons/delete.png", self.delete_file)
-        self.move_btn = self.create_button("Move File", "Icons/move.png", self.move_file )
+        self.move_btn = self.create_button("Move File", "Icons/move.png", self.move_file)
         self.download_btn = self.create_button("Download File", "Icons/download.png", self.download_file)
         self.upload_btn = self.create_button("Upload File", "Icons/upload.png", self.upload_file)
 
-
         layout.addWidget(self.output_label)
         layout.addWidget(self.output_text)
-        layout.addWidget(self.file_path_label)
-        layout.addWidget(self.file_path_text_box)
+        layout.addWidget(self.source_path_label)
+        layout.addWidget(self.source_path_text_box)
+        layout.addWidget(self.destination_path_label)
+        layout.addWidget(self.destination_path_text_box)
         layout.addWidget(self.view_btn)
         layout.addWidget(self.create_btn)
         layout.addWidget(self.delete_btn)
@@ -120,21 +127,27 @@ class ClientWindow(QWidget):
         btn.clicked.connect(callback)
         return btn
 
-    def get_file_path(self) -> str:
-        return self.file_path_text_box.text()
+    def get_source_file(self) -> str:
+        return self.source_path_text_box.text().strip()
+
+    def get_destination_file(self) -> str:
+        return self.destination_path_text_box.text().strip()
+
+    def clear_file_paths(self):
+        # FIXED: Removed recursive call
+        self.source_path_text_box.clear()
+        self.destination_path_text_box.clear()
 
     def write_result(self, result: str):
-        self.output_text.clear()
+        # Combined logic and cleared input fields
         self.output_text.setText(result)
+        self.clear_file_paths()
 
     def run_operation(self, op_name, *args):
-        """Starts the background thread"""
         self.write_result(f"Executing {op_name.upper()}... please wait.")
         self.set_ui_enabled(False)
 
-
         self.worker = ClientWorker(self.client, op_name, *args)
-
         self.worker.result_ready.connect(self.on_operation_success)
         self.worker.error_occurred.connect(self.on_operation_error)
         self.worker.start()
@@ -147,46 +160,46 @@ class ClientWindow(QWidget):
         self.write_result(f"CRITICAL ERROR: {err}")
         self.set_ui_enabled(True)
 
-
-
     def view_tree(self):
         self.run_operation("view")
 
     def create_file(self):
-        path = self.get_file_path()
+        path = self.get_source_file()
         if path:
             self.run_operation("create", path)
+        else:
+            self.write_result("Error: Provide path")
 
     def delete_file(self):
-        path = self.get_file_path()
+        path = self.get_source_file() # FIXED typo
         if path:
             self.run_operation("delete", path)
+        else:
+            self.write_result("Error: Provide path")
 
     def move_file(self):
-        filepaths = self.get_file_path().split(" ")
-        if len(filepaths) >= 2:
-            self.run_operation("move", filepaths[0], filepaths[1])
+        source = self.get_source_file()
+        destination = self.get_destination_file()
+        # FIXED: Check for empty strings
+        if not source:
+            self.write_result("Error: Provide 'source'")
+        elif not destination:
+            self.write_result("Error: Provide 'destination'")
         else:
-            self.write_result("Error: Provide 'source destination'")
+            self.run_operation("move", source, destination)
 
     def download_file(self):
-        path = self.get_file_path()
+        path = self.get_source_file() # FIXED typo
         if path:
             self.run_operation("download", path)
 
     def upload_file(self):
-        filepaths = self.get_file_path().split(" ")
-        if len(filepaths) >= 2:
-            self.run_operation("upload", filepaths[0], filepaths[1])
+        source = self.get_source_file()
+        destination = self.get_destination_file()
+        if not source or not destination:
+            self.write_result("Error: Provide both source and destination")
         else:
-            self.write_result("Error: Provide 'source destination'")
-
-    def write_result(self, result: str):
-        self.output_text.clear()
-        self.output_text.setText(result)
-
-    def get_file_path(self) -> str:
-        return self.file_path_text_box.text()
+            self.run_operation("upload", source, destination)
 
     def set_ui_enabled(self, enabled: bool):
         self.view_btn.setEnabled(enabled)
@@ -195,7 +208,8 @@ class ClientWindow(QWidget):
         self.move_btn.setEnabled(enabled)
         self.download_btn.setEnabled(enabled)
         self.upload_btn.setEnabled(enabled)
-        self.file_path_text_box.setEnabled(enabled)
+        self.source_path_text_box.setEnabled(enabled)
+        self.destination_path_text_box.setEnabled(enabled)
 
 
 

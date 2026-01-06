@@ -94,29 +94,28 @@ class Server:
         op_failed = False
 
         self.data_manager.listen()
-        src_path = self.data_manager.get_data()
-        print(src_path)
+        combined = self.data_manager.get_data()
 
-        self.data_manager.listen()
-        dst_path = self.data_manager.get_data()
-        print(dst_path)
+        if "|" not in combined:
+            self.send_response(False)  # Helper to send H_OP_FAILED
+            return
 
-        src_file_exists = self.data_manager.getStorageManager().find(src_path)
-        if not src_file_exists:
-            op_failed = True
-        else:
-            src_file_data = self.data_manager.getStorageManager().read(src_path)
-            success = self.data_manager.getStorageManager().write(dst_path,src_file_data)
-            if not success:
-                op_failed = True
+        src_path, dst_path = combined.split("|")
+        src_path, dst_path = src_path.strip(), dst_path.strip()
+
+        storage = self.data_manager.getStorageManager()
+        op_success = False
+
+        if storage.find(src_path):
+            data = storage.read(src_path)
+            if storage.write(dst_path, data):
+                storage.remove_file(src_path)
+                op_success = True
 
         self.data_manager.clear_sending_packet_list()
-        if op_failed:
-            self.data_manager.prepare_operation_packet(d.Flow_Header.H_OP_FAILED)
-        else:
-            self.data_manager.prepare_operation_packet(d.Flow_Header.H_OP_SUCCESS)
+        header = d.Flow_Header.H_OP_SUCCESS if op_success else d.Flow_Header.H_OP_FAILED
+        self.data_manager.prepare_operation_packet(header)
         self.data_manager.send_prepared_packets()
-
         self.in_operation = False
 
 
