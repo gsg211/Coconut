@@ -78,81 +78,70 @@ class SendingWindow:
         if not self.__manager.is_started:
             self.__manager.start()
 
+        total_packets = len(self.packet_list)
+        done_seq_num = total_packets + 1
+
         base = 1
         next_seq_num = 1
-        last_seen_time = {}
-        acked_packets = [False] * (len(self.packet_list) + 1)
 
-        total_packets = len(self.packet_list)
-        done_sending_data = False
-        done_transmission_ack = False
+        acked_packets = [False] * (done_seq_num + 1)
+        last_sent_time = {}  # seq_num -> timestamp
 
-        while not (done_sending_data and done_transmission_ack and base > total_packets):
+        print(f"Sender: Starting transmission of {total_packets} packets (Done Seq: {done_seq_num})")
 
+        while not acked_packets[done_seq_num]:
+
+            # 1. SEND PHASE (Fill the window)
             while next_seq_num <= total_packets and (next_seq_num - base) < self.__window_size:
-                packet_to_send = self.packet_list[next_seq_num - 1]
+                packet = self.packet_list[next_seq_num - 1]
                 if not self.__will_lose():
-                    self.__manager.q_snd_put(packet_to_send.get_full_message())
-                    # print(f"Sender: Sent packet {packet_to_send.get_seq_nr()}")
-                else:
-                    pass
-                    # print(f"Sender: Simulating loss of packet {packet_to_send.get_seq_nr()}")
-                last_seen_time[next_seq_num] = time.time()
+                    self.__manager.q_snd_put(packet.get_full_message())
+
+                last_sent_time[next_seq_num] = time.time()
                 next_seq_num += 1
+                time.sleep(0.0001)
 
+            if next_seq_num > total_packets and not acked_packets[done_seq_num]:
+                if done_seq_num not in last_sent_time or \
+                        (time.time() - last_sent_time[done_seq_num] > self.__time_out_interval):
+                    self.__send_H_DONE(done_seq_num)
+                    last_sent_time[done_seq_num] = time.time()
 
-            if next_seq_num > total_packets and not done_sending_data:
-                self.__send_H_DONE(total_packets + 1)
-                last_seen_time[total_packets + 1] = time.time()
-                # print(f"Sender: Sent H_DONE with sequence number {total_packets + 1}")
-                done_sending_data = True
+            for _ in range(self.__window_size):
+                received = self.__manager.q_rcv_get()
+                if not received:
+                    break
 
-
-            current_time = time.time()
-            received_packet = self.__manager.q_rcv_get()
-
-            if received_packet:
-                raw_packet, (addr, port) = received_packet
+                raw_pkt, _ = received
                 pkt = udp.UDP_Packet.__new__(udp.UDP_Packet)
-                pkt.init_from_full_message(bytearray(raw_packet))
-                # pkt.print_everything_decoded()
-                seq = pkt.get_seq_nr()
+                pkt.init_from_full_message(bytearray(raw_pkt))
 
-                if pkt.get_custom_header() == d.Flow_Header.H_ACK:
-                    # print(f"Sender: Received ACK for {seq}")
-                    if seq == total_packets + 1:
-                        done_transmission_ack = True
-                        # print("Sender: Received ACK for H_DONE. Transmission complete.")
-                    elif base <= seq <= total_packets:
+                seq = pkt.get_seq_nr()
+                header = pkt.get_custom_header()
+
+                if header == d.Flow_Header.H_ACK:
+                    if 1 <= seq <= done_seq_num:
                         acked_packets[seq] = True
                         while base <= total_packets and acked_packets[base]:
-                            # print(f"Sender: Advanced base to {base + 1}")
                             base += 1
-                elif pkt.get_custom_header() == d.Flow_Header.H_NAK:
-                    # print(f"Sender: Received NAK for {seq}. Retransmitting packet {seq}.")
+                            if base - 1 in last_sent_time:
+                                del last_sent_time[base - 1]
+
+                elif header == d.Flow_Header.H_NAK:
                     if base <= seq <= total_packets:
-                        packet_to_retransmit = self.packet_list[seq - 1]
-                        self.__manager.q_snd_put(packet_to_retransmit.get_full_message())
-                        last_seen_time[seq] = time.time()
-            else:
+                        re_pkt = self.packet_list[seq - 1]
+                        self.__manager.q_snd_put(re_pkt.get_full_message())
+                        last_sent_time[seq] = time.time()
 
-                for seq_num in range(base, next_seq_num):
-                    if not acked_packets[seq_num] and (current_time - last_seen_time.get(seq_num, 0)) > self.__time_out_interval:
-                        # print(f"Sender: Timeout for packet {seq_num}. Retransmitting.")
-                        packet_to_retransmit = self.packet_list[seq_num - 1]
-                        self.__manager.q_snd_put(packet_to_retransmit.get_full_message())
-                        last_seen_time[seq_num] = time.time()
+            now = time.time()
+            for s in range(base, next_seq_num):
+                if not acked_packets[s]:
+                    if s in last_sent_time and (now - last_sent_time[s]) > self.__time_out_interval:
+                        if not self.__will_lose():
+                            self.__manager.q_snd_put(self.packet_list[s - 1].get_full_message())
+                        last_sent_time[s] = now
 
-                if done_sending_data and not done_transmission_ack and (current_time - last_seen_time.get(total_packets + 1, 0)) > self.__time_out_interval:
-                    self.__send_H_DONE(total_packets + 1)
-                    last_seen_time[total_packets + 1] = time.time()
-                    # print(f"Sender: Timeout for H_DONE. Retransmitting H_DONE with sequence number {total_packets + 1}.")
-
-            time.sleep(0.01)
-
-
-        # print("Sender: All packets sent and acknowledged.")
-
+            time.sleep(0.001)
 
 
 

@@ -1,4 +1,5 @@
 import sys
+import json
 
 from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtCore import Qt, QSize
@@ -33,21 +34,25 @@ class ClientWorker(QThread):
                 self.client.startOp_move_file(*self.args)
             elif self.op_name == "download":
                 self.client.startOp_download_file(self.args[0])
-
+            elif self.op_name == "update_config":
+                self.client.startOp_update_config(*self.args)
             elif self.op_name == "upload":
                 self.client.startOp_upload_file(*self.args)
 
             data = self.client.endOp_get_data()
+
             if self.op_name == "download":
                 self.client.get_data_manager().getStorageManager().write(self.args[1], data)
-                data = "File downloaded"
+                result_message = f"SUCCESS: File downloaded to {self.args[1]}"
+                self.result_ready.emit(result_message)
+            else:
+                self.result_ready.emit(data)
 
-            self.result_ready.emit(data)
         except Exception as e:
             self.error_occurred.emit(str(e))
 
-def load_button_stylesheet():
-    file_path = f"{resource_path}/ButtonStyle.css"
+def load_button_stylesheet(stylesheet:str):
+    file_path = f"{resource_path}/{stylesheet}"
     try:
         with open(file_path, "r") as f:
             return f.read()
@@ -59,7 +64,7 @@ class ClientWindow(QWidget):
     def __init__(self, client: Client):
         super().__init__()
         self.client = client
-        self.button_style = load_button_stylesheet()
+        self.button_style = load_button_stylesheet("ButtonStyle.css")
         self.icon_size = 40
         self.worker = None
         self.init_ui()
@@ -71,6 +76,31 @@ class ClientWindow(QWidget):
 
         layout = QVBoxLayout()
         layout.setAlignment(Qt.AlignTop)
+
+
+        top_container = QWidget()
+        top_layout = QHBoxLayout(top_container)
+        top_layout.setContentsMargins(0, 0, 0, 0)
+
+
+        self.output_label = QLabel("Output:")
+        self.output_label.setFont(QFont("Consolas", 12))
+
+
+        self.config_btn = QPushButton()
+        self.config_btn.setIcon(QIcon(f"{resource_path}/Icons/Coconut.png"))
+        self.config_btn.setIconSize(QSize(60, 60))  # Adjust size as needed
+        self.config_btn.setFixedSize(60, 60)
+
+        self.config_btn.setStyleSheet(load_button_stylesheet("ImageBtn.css"))
+        self.config_btn.setCursor(Qt.PointingHandCursor)
+        self.config_btn.clicked.connect(self.update_client_config)
+
+
+        top_layout.addWidget(self.output_label)
+        top_layout.addStretch()
+        top_layout.addWidget(self.config_btn)
+
 
         self.output_label = QLabel("Output:")
         self.output_label.setFont(QFont("Consolas", 12))
@@ -103,7 +133,7 @@ class ClientWindow(QWidget):
         self.download_btn = self.create_button("Download File", "Icons/download.png", self.download_file)
         self.upload_btn = self.create_button("Upload File", "Icons/upload.png", self.upload_file)
 
-        layout.addWidget(self.output_label)
+        layout.addWidget(top_container)
         layout.addWidget(self.output_text)
         layout.addWidget(self.source_path_label)
         layout.addWidget(self.source_path_text_box)
@@ -203,6 +233,22 @@ class ClientWindow(QWidget):
         else:
             self.run_operation("upload", source, destination)
 
+    def update_client_config(self):
+        file_path = "clientConfig.json"
+        try:
+            with open(file_path, "r") as f:
+                config_json_str = f.read()
+                config_data = json.loads(config_json_str)
+
+            self.client.apply_new_config(config_data)
+            self.run_operation("update_config", config_json_str)
+
+        except FileNotFoundError:
+            self.write_result(f"ERROR: {file_path} not found.")
+        except Exception as e:
+            self.write_result(f"ERROR: {e}")
+
+
     def set_ui_enabled(self, enabled: bool):
         self.view_btn.setEnabled(enabled)
         self.create_btn.setEnabled(enabled)
@@ -233,5 +279,6 @@ if __name__ == "__main__":
 
     app = QApplication(sys.argv)
     window = ClientWindow(client)
+
     window.show()
     sys.exit(app.exec_())

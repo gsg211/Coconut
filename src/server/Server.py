@@ -2,6 +2,7 @@ from SlidingWindowProtocol import DataTransferManager as dtm
 import defines as d
 import signal
 import sys
+import json
 
 class Server:
     def __init__(self, config:{}):
@@ -165,7 +166,47 @@ class Server:
 
         self.in_operation = False
 
+    def apply_new_config(self, config_data: dict):
+        dtm = self.data_manager
+        if "window_size" in config_data:
+            ws = config_data["window_size"]
+            dtm._window_manager._sw._window_size = ws
+            dtm._window_manager._rw._window_size = ws
 
+        if "packet_data_size" in config_data:
+            dtm._window_manager._sw._packet_data_size = config_data["packet_data_size"]
+
+        if "time_out_interval" in config_data:
+            dtm._window_manager._sw._time_out_interval = config_data["time_out_interval"]
+
+        try:
+            with open("ServerConfig.json", "w") as f:
+                json.dump(config_data, f, indent=2)
+            print(f"SERVER CONFIG UPDATED AND SAVED: {config_data}")
+        except Exception as e:
+            print(f"Failed to write ServerConfig.json: {e}")
+
+
+    def endOp_update_config(self):
+        if not self.in_operation:
+            return
+
+        self.data_manager.listen()
+        config_json_str = self.data_manager.get_data()
+
+        try:
+            config_data = json.loads(config_json_str)
+            self.apply_new_config(config_data)
+
+            self.data_manager.clear_sending_packet_list()
+            self.data_manager.prepare_operation_packet(d.Flow_Header.H_OP_SUCCESS)
+        except Exception as e:
+            print(f"Failed to update config: {e}")
+            self.data_manager.clear_sending_packet_list()
+            self.data_manager.prepare_operation_packet(d.Flow_Header.H_OP_FAILED)
+
+        self.data_manager.send_prepared_packets()
+        self.in_operation = False
 
     def startOp_listen(self):
         if self.in_operation:
@@ -187,6 +228,9 @@ class Server:
                 break
             elif d.Operation_Header.H_OP_MOVE in headers:
                 self.endOp_move_file()
+                break
+            elif d.Operation_Header.H_OP_CONFIG in headers:
+                self.endOp_update_config()
                 break
             elif d.Operation_Header.H_OP_DOWNLOAD in headers:
                 self.endOp_download_file()

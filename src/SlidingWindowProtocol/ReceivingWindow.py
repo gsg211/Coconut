@@ -57,47 +57,52 @@ class ReceivingWindow:
     def listen(self):
         if not self.__manager.is_started:
             self.__manager.start()
+
         buffer: dict[int, udp.UDP_Packet] = {}
         expected_number = 1
-        h_done_received_and_acked = False
         self.done_transmission = False
         self.packet_list.clear()
 
-        start_time = time.time()
-        while not h_done_received_and_acked:
+        final_sequence_number = -1
+
+        while True:
             expected_packet = self.__manager.q_rcv_get()
+
             if expected_packet is None:
-                if self.done_transmission:
-                    if self.packet_list and self.packet_list[-1].get_custom_header() == d.Flow_Header.H_DONE:
-                        h_done_received_and_acked = True
-                time.sleep(0.01)
+                if final_sequence_number != -1 and expected_number > final_sequence_number:
+                    break
+                time.sleep(0.001)
                 continue
 
             raw_packet, (addr, port) = expected_packet
             pkt = udp.UDP_Packet.__new__(udp.UDP_Packet)
             pkt.init_from_full_message(bytearray(raw_packet))
-
-            sequence_number = pkt.get_seq_nr()
-
-            if sequence_number == expected_number:
-                self.packet_list.append(pkt)
-                self.__send_ACK(sequence_number)
-                expected_number += 1
-
-                while expected_number in buffer:
-                    buffered_pkt = buffer.pop(expected_number)
-                    self.packet_list.append(buffered_pkt)
-                    self.__send_ACK(expected_number)
-                    expected_number += 1
-            elif sequence_number > expected_number:
-                if sequence_number not in buffer:
-                    buffer[sequence_number] = pkt
-                self.__send_NAK(expected_number)
-            else:
-                self.__send_ACK(sequence_number)
+            seq = pkt.get_seq_nr()
 
             if pkt.get_custom_header() == d.Flow_Header.H_DONE:
+                final_sequence_number = seq
                 self.done_transmission = True
+
+            if seq == expected_number:
+                self.packet_list.append(pkt)
+                self.__send_ACK(seq)
+                expected_number += 1
+
+                # Pull from buffer
+                while expected_number in buffer:
+                    buf_pkt = buffer.pop(expected_number)
+                    self.packet_list.append(buf_pkt)
+                    self.__send_ACK(expected_number)
+                    expected_number += 1
+            elif seq > expected_number:
+                if seq not in buffer:
+                    buffer[seq] = pkt
+                self.__send_NAK(expected_number)
+            else:
+                self.__send_ACK(seq)
+
+            if final_sequence_number != -1 and expected_number > final_sequence_number:
+                break
 
     def get_custom_headers(self) -> list[int]:
         lst = []

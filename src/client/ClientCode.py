@@ -34,6 +34,33 @@ class Client:
         self.stop()
         sys.exit(0)
 
+    def startOp_update_config(self, config_json_str: str):
+        if self.in_operation:
+            return
+        self.in_operation = True
+        self.data_manager.clear_receiving_queue()
+
+        self.data_manager.clear_sending_packet_list()
+        self.data_manager.prepare_operation_packet(d.Operation_Header.H_OP_CONFIG)
+        self.data_manager.send_prepared_packets()
+
+        self.data_manager.clear_sending_packet_list()
+        self.data_manager.prepare_data_packets(config_json_str)
+        self.data_manager.send_prepared_packets()
+
+    def apply_new_config(self, config_data: dict):
+        dtm = self.data_manager
+        if "window_size" in config_data:
+            ws = config_data["window_size"]
+            dtm._window_manager._sw._window_size = ws
+            dtm._window_manager._rw._window_size = ws
+
+        if "packet_data_size" in config_data:
+            dtm._window_manager._sw._packet_data_size = config_data["packet_data_size"]
+
+        if "time_out_interval" in config_data:
+            dtm._window_manager._sw._time_out_interval = config_data["time_out_interval"]
+
     def stop(self):
         self.data_manager.stop()
 
@@ -142,7 +169,7 @@ class Client:
         if not self.in_operation:
             return ""
 
-        full_data = ""
+        chunks = []
         while True:
             self.data_manager.listen()
 
@@ -150,7 +177,7 @@ class Client:
             chunk = self.data_manager.get_data()
 
             if chunk:
-                full_data += chunk
+                chunks.append(chunk)
 
             if d.Flow_Header.H_OP_SUCCESS in headers:
                 print("OPERATION SUCCESS")
@@ -162,7 +189,7 @@ class Client:
         self.in_operation = False
         self.data_manager.clear_receiving_queue()
         self.data_manager.clear_sending_packet_list()
-        return full_data
+        return "".join(chunks)
 
     def get_data_manager(self) -> DataTransferManager:
         return self.data_manager
