@@ -62,18 +62,40 @@ class StorageManager:
         items = os.listdir(full_path)
         return "\n".join(f"- {'D' if os.path.isdir(os.path.join(full_path, item)) else 'F'} {item}"for item in items)
 
+
     def generate_tree_view(self, relative_path: str) -> str:
         start_path = os.path.join(self._root_dir, relative_path)
-        tree_str = []
+
         if not os.path.exists(start_path):
             return ""
-        for root, dirs, files in os.walk(start_path):
-            level = root.replace(start_path, '').count(os.sep)
-            indent = ' ' * 4 * level
-            tree_str.append(f"{indent}{os.path.basename(root)}/")
-            subindent = ' ' * 4 * (level + 1)
-            for f in files:
-                tree_str.append(f"{subindent}{f}")
+
+        tree_str = []
+        # Use the directory name as the root, or "." if it's empty
+        root_name = os.path.basename(start_path.rstrip(os.sep)) or "."
+        tree_str.append(root_name)
+
+        def build_tree(current_path: str, prefix: str = ""):
+            # Get list of items and sort them (directories first, then files)
+            try:
+                items = sorted(os.listdir(current_path),
+                               key=lambda x: (not os.path.isdir(os.path.join(current_path, x)), x.lower()))
+            except PermissionError:
+                return
+
+            for i, item in enumerate(items):
+                is_last = (i == len(items) - 1)
+                item_path = os.path.join(current_path, item)
+
+                # Choose the branch connector
+                connector = "└── " if is_last else "├── "
+
+                tree_str.append(f"{prefix}{connector}{item}")
+
+                if os.path.isdir(item_path):
+                    # If this directory is last, we don't draw a vertical line for its children
+                    extension = "    " if is_last else "│   "
+                    build_tree(item_path, prefix + extension)
+        build_tree(start_path)
         return "\n".join(tree_str)
 
     def remove_file(self,path:str) -> bool:

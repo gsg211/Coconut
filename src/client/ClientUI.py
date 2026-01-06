@@ -75,19 +75,19 @@ class ClientWindow(QWidget):
 
 
         self.output_label = QLabel("Output:")
-        self.output_label.setFont(QFont("Arial", 12))
+        self.output_label.setFont(QFont("Consolas", 12))
 
         self.output_text = QTextBrowser()
-        self.output_text.setFont(QFont("Arial", 12))
+        self.output_text.setFont(QFont("Consolas", 12))
         self.output_text.setStyleSheet("background-color: #36393e; color: white;")
 
 
         self.file_path_label = QLabel("Enter file path here:")
-        self.file_path_label.setFont(QFont("Arial", 12))
+        self.file_path_label.setFont(QFont("Consolas", 12))
 
         self.file_path_text_box = QLineEdit()
         self.file_path_text_box.setMinimumHeight(50)
-        self.file_path_text_box.setFont(QFont("Arial", 12))
+        self.file_path_text_box.setFont(QFont("Consolas", 12))
         self.file_path_text_box.setStyleSheet("background-color: #36393e; color: white;" )
 
 
