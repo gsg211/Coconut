@@ -1,15 +1,14 @@
 import sys
-from ClientCode import Client
-import defines as d
-from PyQt5.QtCore import QThread, pyqtSignal
 
+from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtGui import QIcon, QColor, QFont
+from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtWidgets import *
 
+import defines as d
+from ClientCode import Client
+
 resource_path = "../../Resources/"
-
-
 
 
 class ClientWorker(QThread):
@@ -33,19 +32,19 @@ class ClientWorker(QThread):
             elif self.op_name == "move":
                 self.client.startOp_move_file(*self.args)
             elif self.op_name == "download":
-                self.client.startOp_download_file(*self.args)
+                self.client.startOp_download_file(self.args[0])
+
             elif self.op_name == "upload":
                 self.client.startOp_upload_file(*self.args)
 
             data = self.client.endOp_get_data()
-
+            if self.op_name == "download":
+                self.client.get_data_manager().getStorageManager().write(self.args[1], data)
+                data = "File downloaded"
 
             self.result_ready.emit(data)
         except Exception as e:
             self.error_occurred.emit(str(e))
-
-
-
 
 def load_button_stylesheet():
     file_path = f"{resource_path}/ButtonStyle.css"
@@ -134,12 +133,10 @@ class ClientWindow(QWidget):
         return self.destination_path_text_box.text().strip()
 
     def clear_file_paths(self):
-        # FIXED: Removed recursive call
         self.source_path_text_box.clear()
         self.destination_path_text_box.clear()
 
     def write_result(self, result: str):
-        # Combined logic and cleared input fields
         self.output_text.setText(result)
         self.clear_file_paths()
 
@@ -180,7 +177,6 @@ class ClientWindow(QWidget):
     def move_file(self):
         source = self.get_source_file()
         destination = self.get_destination_file()
-        # FIXED: Check for empty strings
         if not source:
             self.write_result("Error: Provide 'source'")
         elif not destination:
@@ -189,9 +185,15 @@ class ClientWindow(QWidget):
             self.run_operation("move", source, destination)
 
     def download_file(self):
-        path = self.get_source_file() # FIXED typo
-        if path:
-            self.run_operation("download", path)
+        source = self.get_source_file()
+        destination = self.get_destination_file()
+
+        if not source:
+            self.write_result("Error: Provide 'source'")
+        elif not destination:
+            self.write_result("Error: Provide 'destination'")
+        else:
+            self.run_operation("download", source, destination)
 
     def upload_file(self):
         source = self.get_source_file()

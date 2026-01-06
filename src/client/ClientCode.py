@@ -5,6 +5,9 @@ import defines as d
 import signal
 import sys
 
+from SlidingWindowProtocol.DataTransferManager import DataTransferManager
+
+
 class Client:
     def __init__(self, config:{}):
         self.data_manager = dtm.DataTransferManager(
@@ -160,6 +163,9 @@ class Client:
         self.data_manager.clear_receiving_queue()
         self.data_manager.clear_sending_packet_list()
         return full_data
+
+    def get_data_manager(self) -> DataTransferManager:
+        return self.data_manager
 
 
 if __name__ == "__main__":

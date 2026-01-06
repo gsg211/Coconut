@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a3f61069-666f-43f3-87c8-af2f8248cd53" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ClientStorage/test.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientStorage/UI TEST FILE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SlidingWindowProtocol/ReceivingWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindowProtocol/ReceivingWindow.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/ClientCode.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/ClientCode.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/ClientUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/ClientUI.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/Server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Server.py" afterDir="false" />

@@ -126,6 +126,7 @@ class Server:
         self.data_manager.listen()
         file_path = self.data_manager.get_data()
         file_found = self.data_manager.getStorageManager().find(file_path)
+        print(f"DEBUG: Server searching for: '{file_path}'")
         if not file_found:
             self.data_manager.clear_sending_packet_list()
             self.data_manager.prepare_operation_packet(d.Flow_Header.H_OP_FAILED)
