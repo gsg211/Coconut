@@ -3,7 +3,7 @@ import UDP_packet as u
 import socket as s
 
 import selectors as sel
-import debugging.logs as l
+
 import os
 
 from queue import Queue,Empty
@@ -15,26 +15,23 @@ class SocketManager:
         
         self.__send_queue = Queue()
         self.__receive_queue = Queue()
+
         self.__addr_own = addr_own
-        self.__dev_name = dev_name
         self.__port_own = port_own
+
+        self.__dev_name = dev_name
         self.__reactor_thr = Thread(target=self.__worker,name='REACTOR_THREAD - device {}'.format(self.__dev_name))
         self.__mutex_own = Lock()
         
         
         self.__peer_addr:str = d.LOCAL_HOST_ADDR_A
         self.__peer_port:int = d.DEFAULT_PORT_B
-        # default values, can be changed
         
         self.is_init = False
         self.is_started = False
         self.__pipe_fd_rd, self.__pipe_fd_wr= os.pipe()
         
         self.__is_signaled = False
-        
-        
-        
-        
         
     def set_peer_data(self,peer_addr:str, peer_port:int):
         self.__peer_addr = peer_addr
@@ -105,7 +102,7 @@ class SocketManager:
                 events = self.__selector.select()
                 for key, event in events:
                     
-                    if key.fileobj is self.__pipe_fd_rd:
+                    if key.fileobj is self.__pipe_fd_rd: # wake up event
                         os.read(self.__pipe_fd_rd,1) # consume the special event, for the loop to go forward
                         
                     elif key.fileobj is self.__sck_own:
@@ -119,13 +116,12 @@ class SocketManager:
                                 if data:
                                     self.__sck_own.sendto(data,(self.__peer_addr,self.__peer_port))
                             except Empty as e:
-                                l.utils_logger.info("IO thread tried to send from empty queue")
+                                pass
                             
                         
             except Exception:
                 self.signal_stop()
-                l.utils_logger.info("IO thread failed - unknown reason")
-                
+
         self.__is_signaled = False
         self.__selector.close()
         self.__sck_own.close()

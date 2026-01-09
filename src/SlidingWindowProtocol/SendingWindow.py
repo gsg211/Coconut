@@ -16,10 +16,6 @@ class SendingWindow:
                  socket_manager,
                  window_size=2,  #TODO: modify placeholder value
                  packet_data_size=5,  #TODO: modify placeholder value
-                 sender_address = d.LOCAL_HOST_ADDR_A,
-                 sender_port = d.DEFAULT_PORT_A,
-                 destination_address = d.LOCAL_HOST_ADDR_B,
-                 destination_port = d.DEFAULT_PORT_B,
                  time_out_interval = 0.1,  #TODO: modify placeholder value
                  packet_loss_chance=0.0):
 
@@ -49,7 +45,6 @@ class SendingWindow:
         self.packet_list.clear()
         for string in string_list:
             packet_to_send=udp.UDP_Packet(d.Operation_Header.H_DATA,sequence_counter,string)
-            # packet_to_send.print_payload_decoded()
             self.packet_list.append(packet_to_send)
             sequence_counter+=1
 
@@ -142,18 +137,4 @@ class SendingWindow:
                         last_sent_time[s] = now
 
             time.sleep(0.001)
-
-
-
-
-if __name__=="__main__":
-    sender=SendingWindow()
-
-    sender.send("hello I am a very big string that needs splitting")
-
-    # print(sender.packet_list)
-    # for packet in sender.packet_list:
-    #     print(packet.print_everything())
-    #     print()
-
 

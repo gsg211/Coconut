@@ -77,9 +77,8 @@ class UDP_Packet():
             total += int.from_bytes(current_chunk,'big')
             wraparound_bit = total >> 16 # (2 byte checksum)
             total = total & 0xFFFF + wraparound_bit
-            # print("chunk nr {}: {}".format(i/2+1,current_chunk))
         total = ~total # c1
-        total = total & 0xFFFF # lower 16 bits
+        total = total & 0xFFFF # lower 16 bits, removes extra 1 bits from C1
         return total.to_bytes(d.UDP_Size.CHECKSUM_CHUNK_SZ,'big')
       
 

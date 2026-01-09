@@ -1,9 +1,5 @@
-import time
-
 from SlidingWindowProtocol import DataTransferManager as dtm
 import defines as d
-import signal
-import sys
 
 from SlidingWindowProtocol.DataTransferManager import DataTransferManager
 
@@ -16,7 +12,7 @@ class Client:
             config["window_size"],
             config["packet_data_size"],
 
-            config["sender_address"], # here the client - A is the sender and the server - B is the destination
+            config["sender_address"],
             config["sender_port"],
 
             config["destination_address"],
@@ -27,12 +23,6 @@ class Client:
         )
 
         self.in_operation = False
-        signal.signal(signal.SIGINT,self.handle_sigint)
-
-    def handle_sigint(self, signal, frame):
-        print("RECEIVED SIGINT, QUITTING")
-        self.stop()
-        sys.exit(0)
 
     def startOp_update_config(self, config_json_str: str):
         if self.in_operation:
@@ -83,8 +73,6 @@ class Client:
         self.data_manager.clear_sending_packet_list()
         self.data_manager.prepare_operation_packet(d.Operation_Header.H_OP_CREATE)
         self.data_manager.send_prepared_packets()
-
-        time.sleep(0.2)
 
         self.data_manager.clear_sending_packet_list()
         self.data_manager.prepare_data_packets(file_path)
@@ -148,14 +136,13 @@ class Client:
         self.data_manager.clear_sending_packet_list()
         self.data_manager.prepare_data_packets(combined_paths)
         self.data_manager.send_prepared_packets()
-        return None
+
 
     def startOp_delete_file(self, file_path: str):
         if self.in_operation:
             return ""
         self.in_operation = True
         self.data_manager.clear_receiving_queue()
-
 
         self.data_manager.clear_sending_packet_list()
         self.data_manager.prepare_operation_packet(d.Operation_Header.H_OP_DELETE)
@@ -203,7 +190,7 @@ if __name__ == "__main__":
     config["window_size"] = 2
     config["packet_data_size"] = 5
 
-    config["sender_address"] = d.LOCAL_HOST_ADDR_B # here the client - A is the sender and the server - B is the destination
+    config["sender_address"] = d.LOCAL_HOST_ADDR_B
     config["sender_port"] = d.DEFAULT_PORT_B
 
     config["destination_address"] = d.LOCAL_HOST_ADDR_A

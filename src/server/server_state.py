@@ -4,9 +4,6 @@ import socket as s
 from abc import ABC, abstractmethod
 from typing import override
 
-import debugging.logs as l
-open('../logs/sv_log.log', 'w').close()
-
 
 
 class I_State(ABC):
@@ -29,7 +26,6 @@ class State_Idle(I_State):
     @override       
     def next(self,server:I_StateMachine):
         server.current_state = State_Working()
-        l.sv_logger.info('State changed: now is working')
         server.current_state.run(server)
 
 
@@ -38,12 +34,10 @@ class State_Working(I_State):
     @override
     def run(self,server:I_StateMachine):
         data,addr = server.sv_socket.recvfrom(1024)
-        l.sv_logger.info("Received message from {}: {}".format(addr,data))
-            
+
     @override        
     def next(self,server:I_StateMachine):
         server.current_state = State_Idle()
-        l.sv_logger.info('State changed: now is idle')
 
 
 
@@ -58,16 +52,3 @@ class I_StateMachine(ABC):
     def run(self):
         pass
     
-# class Server(I_StateMachine):
-#     def __init__(self):
-#         super().__init__()
-#         self.current_state = State_Idle()
-#
-#     @override
-#     def run(self):
-#         self.current_state.run(self)
-#
-#
-# if __name__ == '__main__':
-#     my_sv = Server()
-#     my_sv.run()

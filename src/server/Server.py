@@ -1,7 +1,5 @@
 from SlidingWindowProtocol import DataTransferManager as dtm
 import defines as d
-import signal
-import sys
 import json
 
 class Server:
@@ -12,7 +10,7 @@ class Server:
             config["window_size"],
             config["packet_data_size"],
 
-            config["sender_address"], # here the server - B is the sender and the client - A is the destination
+            config["sender_address"],
             config["sender_port"],
 
             config["destination_address"],
@@ -26,14 +24,6 @@ class Server:
 
 
         self.root_dir = config["root_dir"]
-        signal.signal(signal.SIGINT,self.handle_sigint)
-
-
-
-    def handle_sigint(self,signal,frame):
-        print("RECEIVED SIGINT, QUITTING")
-        self.data_manager.stop()
-        sys.exit(0)
 
 
     def endOp_view_tree(self):
@@ -45,11 +35,6 @@ class Server:
         self.data_manager.prepare_data_packets(tree_view)
         self.data_manager.prepare_operation_packet(d.Flow_Header.H_OP_SUCCESS)
         self.data_manager.send_prepared_packets()
-
-        # self.data_manager.clear_sending_packet_list()
-        # self.data_manager.prepare_operation_packet(d.Flow_Header.H_OP_SUCCESS)
-        # self.data_manager.send_prepared_packets()
-
 
         self.in_operation = False
 
@@ -254,7 +239,7 @@ if __name__ == "__main__":
     config["window_size"] = 2
     config["packet_data_size"] = 5
 
-    config["sender_address"] = d.LOCAL_HOST_ADDR_A  # here the client - B is the sender and the server - A is the destination
+    config["sender_address"] = d.LOCAL_HOST_ADDR_A
     config["sender_port"] = d.DEFAULT_PORT_A
 
     config["destination_address"] = d.LOCAL_HOST_ADDR_B

@@ -1,6 +1,5 @@
 from pathlib import Path
 import defines as d
-import debugging.logs as logs
 from datetime import datetime
 
 
@@ -22,11 +21,11 @@ class ConfigData():
                 try:
                     self.__client_id = int(current_line_content) if current_line_idx == d.Config_Line.ID_LINE else self.__client_id
                 except:
-                    logs.utils_logger.info("Could not transform the received client id into an int")
+                    pass
                 try:
                     self.__window_sz = int(current_line_content) if current_line_idx == d.Config_Line.WINDOW_LINE else self.__window_sz
                 except:
-                    logs.utils_logger.info("Could not transform the received window sz into an int")
+                    pass
 
                 current_line_idx+=1
     
@@ -52,7 +51,7 @@ class ConfigData():
                     if int(current_line_content) == cl_id:
                         return True
                 except:
-                    logs.utils_logger.info("Failed to convert line content to client ID in ConfigData, find_client()")
+                    pass
         return False
 
 

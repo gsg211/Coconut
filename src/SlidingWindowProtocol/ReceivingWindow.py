@@ -17,10 +17,6 @@ class ReceivingWindow:
                  socket_manager,
                  window_size=2,  #TODO: modify placeholder value
                  packet_data_size=5,  #TODO: modify placeholder value
-                 sender_address = d.LOCAL_HOST_ADDR_A,
-                 sender_port = d.DEFAULT_PORT_A,
-                 destination_address = d.LOCAL_HOST_ADDR_B,
-                 destination_port = d.DEFAULT_PORT_B,
                  time_out_interval = 0.1,  #TODO: modify placeholder value
                  packet_loss_chance=0.0,
                  ):
@@ -28,10 +24,6 @@ class ReceivingWindow:
         self.__window_size = window_size
         self.__packet_data_size = packet_data_size  # the max size of a packet
         self.__manager = socket_manager
-
-
-        # self.__manager = sm.SocketManager(destination_address, destination_port, "receiver")
-        # self.__manager.set_peer_data(sender_address, sender_port)
 
         self.__time_out_interval = time_out_interval
         self.__packet_loss_chance = packet_loss_chance
@@ -118,10 +110,3 @@ class ReceivingWindow:
                            if packet.get_custom_header() == d.Operation_Header.H_DATA)
             return data
         return None
-
-
-
-if __name__ == "__main__":
-    sender = ReceivingWindow()
-    sender.listen()
-    # print(sender.get_data())
