@@ -35,7 +35,7 @@ class UDP_Packet():
         self.__full_message[d.DATA_LEN_POS] = self.__data_len
         self.__full_message[d.CHECKSUM_POS] = self.__app_checksum
         self.__full_message[d.PAYLOAD_POS]  = self.__payload
-        
+
         checksum                            = self.calculate_checksum()
         self.__app_checksum                 = checksum
         self.__full_message[d.CHECKSUM_POS] = self.__app_checksum
@@ -69,14 +69,14 @@ class UDP_Packet():
         
     def get_msg_as_bytes(self) ->bytes:
         return bytes(self.__full_message)
-    
+
     def calculate_checksum(self) -> bytes:
         total = int(0)
         for i in range(0,d.UDP_Size.PAYLOAD_SZ,d.UDP_Size.CHECKSUM_CHUNK_SZ):
             current_chunk = self.__full_message[i:i+d.UDP_Size.CHECKSUM_CHUNK_SZ]
             total += int.from_bytes(current_chunk,'big')
             wraparound_bit = total >> 16 # (2 byte checksum)
-            total = total & 0xFFFF + wraparound_bit
+            total = (total & 0xFFFF) + wraparound_bit
         total = ~total # c1
         total = total & 0xFFFF # lower 16 bits, removes extra 1 bits from C1
         return total.to_bytes(d.UDP_Size.CHECKSUM_CHUNK_SZ,'big')
@@ -125,5 +125,3 @@ class UDP_Packet():
         self.print_data_len_decoded()
         self.print_app_checksum_decoded()
         self.print_payload_decoded()
-
-        

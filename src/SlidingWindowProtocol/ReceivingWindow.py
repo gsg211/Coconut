@@ -69,6 +69,10 @@ class ReceivingWindow:
             raw_packet, (addr, port) = expected_packet
             pkt = udp.UDP_Packet.__new__(udp.UDP_Packet)
             pkt.init_from_full_message(bytearray(raw_packet))
+            checksum_bytes = pkt.calculate_checksum()
+            if checksum_bytes != b'\x00\x00':
+                print("Checksum verification on receive failed! Dropping Packet")
+                continue
             seq = pkt.get_seq_nr()
 
             if pkt.get_custom_header() == d.Flow_Header.H_DONE:
