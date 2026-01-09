@@ -63,10 +63,6 @@ class Operation_Header(IntEnum):
 BASE_DIR = os.path.dirname(os.path.abspath(__file__)) #/src
 ROOT_DIR = os.path.dirname(BASE_DIR)                  # /
 
-CLIENT_LOG_PATH     = os.path.join(ROOT_DIR, "src", "client", "config.txt")
-SERVER_LOG_PATH = os.path.join(ROOT_DIR, "src", "server", "saved_configs")
-UTILS_LOG_PATH         = os.path.join(ROOT_DIR, "logs", "utils_log.log")
-
 
 CLIENT_ROOT_PATH = os.path.join(ROOT_DIR, "ClientStorage")
 SERVER_ROOT_PATH = os.path.join(ROOT_DIR, "ServerStorage")
