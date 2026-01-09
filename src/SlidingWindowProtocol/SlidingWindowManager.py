@@ -23,10 +23,6 @@ class SlidingWindowManager:
             socket_manager=self.socket_manager,
             window_size=window_size,
             packet_data_size=packet_data_size,
-            sender_address=sender_address,
-            sender_port=sender_port,
-            destination_address=destination_address,
-            destination_port=destination_port,
             time_out_interval=time_out_interval,
             packet_loss_chance=packet_loss_chance
         )
@@ -35,10 +31,6 @@ class SlidingWindowManager:
             socket_manager=self.socket_manager,
             window_size=window_size,
             packet_data_size=packet_data_size,
-            sender_address=sender_address,
-            sender_port=sender_port,
-            destination_address=destination_address,
-            destination_port=destination_port,
             time_out_interval=time_out_interval,
             packet_loss_chance=packet_loss_chance
         )
