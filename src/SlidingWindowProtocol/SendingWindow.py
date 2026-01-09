@@ -50,7 +50,9 @@ class SendingWindow:
 
     #decided if packet gets lost (used to simulate real packet  loss)
     def __will_lose(self) -> bool:
-        return random.random() < self.__packet_loss_chance
+        rnd = random.random()
+        print(rnd)
+        return rnd < self.__packet_loss_chance
 
     def __send_H_DONE(self,sequence_number):
         done_packet = udp.UDP_Packet(d.Flow_Header.H_DONE, sequence_number, '')
@@ -111,6 +113,11 @@ class SendingWindow:
                 pkt = udp.UDP_Packet.__new__(udp.UDP_Packet)
                 pkt.init_from_full_message(bytearray(raw_pkt))
 
+                checksum_bytes = pkt.calculate_checksum()
+                if checksum_bytes != b'\x00\x00':
+                    print("Checksum verification on receive failed! Dropping Packet")
+                    continue
+
                 seq = pkt.get_seq_nr()
                 header = pkt.get_custom_header()
 
@@ -134,6 +141,8 @@ class SendingWindow:
                     if s in last_sent_time and (now - last_sent_time[s]) > self.__time_out_interval:
                         if not self.__will_lose():
                             self.__manager.q_snd_put(self.packet_list[s - 1].get_full_message())
+                        else:
+                            print("Packet lost")
                         last_sent_time[s] = now
 
             time.sleep(0.001)

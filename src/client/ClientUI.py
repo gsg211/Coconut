@@ -265,14 +265,14 @@ class ClientWindow(QWidget):
 if __name__ == "__main__":
     config = {
         "root_dir": d.CLIENT_ROOT_PATH,
-        "window_size": 2,
+        "window_size": 10,
         "packet_data_size": 5,
         "sender_address": d.LOCAL_HOST_ADDR_B,
         "sender_port": d.DEFAULT_PORT_B,
         "destination_address": d.LOCAL_HOST_ADDR_A,
         "destination_port": d.DEFAULT_PORT_A,
-        "time_out_interval": 0.3,
-        "packet_loss_chance": 0,
+        "time_out_interval": 0.5,
+        "packet_loss_chance": 0
     }
 
     client = Client(config)

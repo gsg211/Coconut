@@ -38,6 +38,7 @@ class UDP_Packet():
 
         checksum                            = self.calculate_checksum()
         self.__app_checksum                 = checksum
+        self.__full_message[d.PADDING_POS] = b'\x00'
         self.__full_message[d.CHECKSUM_POS] = self.__app_checksum
 
 

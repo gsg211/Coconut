@@ -4,8 +4,9 @@ from enum import IntEnum
 HEADER_POS             = slice(0,1) # slice is end exclusive, so it's really 0-0
 SEQ_NR_POS             = slice(1,5) # 1-4
 DATA_LEN_POS           = slice(5,7) # 5-6
+PADDING_POS            = slice(7,8) # 7
 CHECKSUM_POS           = slice(8,10) # 8-9
-PAYLOAD_POS            = slice(10,512) # 9-511
+PAYLOAD_POS            = slice(10,511) # 9-511
 
 WINDOW_SIZE            = int(3)
 
@@ -20,7 +21,7 @@ class SocketNotOpenException(Exception):
         super.__init__('The socket {} is not properly configured',format(sck))
 
 class UDP_Size(IntEnum):
-    PAYLOAD_SZ         = 512
+    PAYLOAD_SZ         = 511
     HEADER_SZ          = 1
     SEQ_NR_SZ          = 4
     DATA_LEN_SZ        = 2
