@@ -1,6 +1,6 @@
 {
-  "window_size": 16,
-  "packet_data_size": 2,
-  "time_out_interval": 0.1,
-  "packet_loss_chance": 0.1
+  "window_size": 8,
+  "packet_data_size": 64,
+  "time_out_interval": 0.01,
+  "packet_loss_chance": 0.3
 }

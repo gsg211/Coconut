@@ -10,84 +10,7 @@ from PyQt5.QtWidgets import *
 import defines as d
 from ClientCode import Client, ClientWorker
 
-resource_path = "../../Resources/"
-
-
-
-def load_button_stylesheet(stylesheet:str):
-    file_path = f"{resource_path}/{stylesheet}"
-    try:
-        with open(file_path, "r") as f:
-            return f.read()
-    except Exception as e:
-        return f"Error loading stylesheet: {e}"
-
-class ConfigWindow(QWidget):
-    back_requested = pyqtSignal()
-    config_updated = pyqtSignal(str)
-
-    def __init__(self, client):
-        super().__init__()
-        self.client = client
-        self.init_ui()
-
-    def init_ui(self):
-        self.setStyleSheet("color: white; background-color: #1e2124;")
-        layout = QVBoxLayout()
-        layout.setContentsMargins(20, 20, 20, 20)
-
-        title = QLabel("CONFIGURATION")
-        title.setFont(QFont("Consolas", 16, QFont.Bold))
-        layout.addWidget(title)
-
-
-        self.config_editor = QTextEdit()
-        self.config_editor.setFont(QFont("Consolas", 12))
-        self.config_editor.setStyleSheet("background-color: #36393e; color: white; border: 1px solid #4f545c;")
-
-        try:
-            with open("clientConfig.json", "r") as f:
-                self.config_editor.setText(f.read())
-        except:
-            self.config_editor.setText("{}")
-
-        layout.addWidget(QLabel("Edit JSON directly:"))
-        layout.addWidget(self.config_editor)
-
-        btn_layout = QHBoxLayout()
-
-        self.back_btn = QCommandLinkButton("Back")
-        self.save_btn = QCommandLinkButton("Apply config")
-
-        for btn in [self.back_btn, self.save_btn]:
-            btn.setFont(QFont("Consolas", 10, QFont.Bold))
-            btn.setFixedHeight(40)
-            btn.setCursor(Qt.PointingHandCursor)
-            btn.setStyleSheet(load_button_stylesheet("ButtonStyle.css"))
-            btn.setIcon(QIcon(f"{resource_path}/Icons/Coconut.png"))
-            btn.setIconSize(QSize(60, 60))
-
-        self.back_btn.clicked.connect(self.back_requested.emit)
-        self.save_btn.clicked.connect(self.save_config)
-
-        btn_layout.addWidget(self.back_btn)
-        btn_layout.addWidget(self.save_btn)
-
-        layout.addLayout(btn_layout)
-        self.setLayout(layout)
-
-    def save_config(self):
-        config_str = self.config_editor.toPlainText()
-        try:
-            config_data = json.loads(config_str)
-            with open("clientConfig.json", "w") as f:
-                f.write(config_str)
-
-            self.client.apply_new_config(config_data)
-            self.config_updated.emit(config_str)
-            QMessageBox.information(self, "Success", "Configuration Applied.")
-        except Exception as e:
-            QMessageBox.critical(self, "Error", f"Invalid JSON: {e}")
+from ConfigWindow import ConfigWindow, load_stylesheet, get_resource_path
 
 
 class ClientWindow(QWidget):
@@ -96,7 +19,7 @@ class ClientWindow(QWidget):
     def __init__(self, client: Client):
         super().__init__()
         self.client = client
-        self.button_style = load_button_stylesheet("ButtonStyle.css")
+        self.button_style = load_stylesheet("ButtonStyle.css")
         self.icon_size = 40
         self.worker = None
         self.init_ui()
@@ -114,10 +37,10 @@ class ClientWindow(QWidget):
         self.output_label.setFont(QFont("Consolas", 12))
 
         self.config_btn = QPushButton()
-        self.config_btn.setIcon(QIcon(f"{resource_path}/Icons/Coconut.png"))
+        self.config_btn.setIcon(QIcon(f"{get_resource_path()}/Icons/Coconut.png"))
         self.config_btn.setIconSize(QSize(60, 60))
         self.config_btn.setFixedSize(60, 60)
-        self.config_btn.setStyleSheet(load_button_stylesheet("ImageBtn.css"))
+        self.config_btn.setStyleSheet(load_stylesheet("ImageBtn.css"))
         self.config_btn.setCursor(Qt.PointingHandCursor)
         self.config_btn.clicked.connect(self.switch_to_config.emit)
 
@@ -132,13 +55,13 @@ class ClientWindow(QWidget):
         self.source_path_label = QLabel("Source Path:")
         self.source_path_label.setFont(QFont("Consolas", 12))
         self.source_path_text_box = QLineEdit()
-        self.source_path_text_box.setStyleSheet("background-color: #36393e; color: white; padding: 5px;")
         self.source_path_text_box.setMinimumHeight(40)
+        self.source_path_text_box.setStyleSheet(load_stylesheet("TextBox.css"))
 
         self.destination_path_label = QLabel("Destination Path:")
         self.destination_path_label.setFont(QFont("Consolas", 12))
         self.destination_path_text_box = QLineEdit()
-        self.destination_path_text_box.setStyleSheet("background-color: #36393e; color: white; padding: 5px;")
+        self.destination_path_text_box.setStyleSheet(load_stylesheet("TextBox.css"))
         self.destination_path_text_box.setMinimumHeight(40)
 
         self.view_btn = self.create_button("View Tree", "Icons/view tree.png", self.view_tree)
@@ -166,7 +89,7 @@ class ClientWindow(QWidget):
     def create_button(self, text, icon_path, callback):
         btn = QCommandLinkButton(text)
         btn.setStyleSheet(self.button_style)
-        btn.setIcon(QIcon(f"{resource_path}/{icon_path}"))
+        btn.setIcon(QIcon(f"{get_resource_path()}/{icon_path}"))
         btn.setIconSize(QSize(self.icon_size, self.icon_size))
         btn.clicked.connect(callback)
         return btn
