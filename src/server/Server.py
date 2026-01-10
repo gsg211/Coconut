@@ -153,16 +153,27 @@ class Server:
 
     def apply_new_config(self, config_data: dict):
         dtm = self.data_manager
+
         if "window_size" in config_data:
             ws = config_data["window_size"]
             dtm._window_manager._sw._window_size = ws
             dtm._window_manager._rw._window_size = ws
 
         if "packet_data_size" in config_data:
-            dtm._window_manager._sw._packet_data_size = config_data["packet_data_size"]
+            pds = config_data["packet_data_size"]
+            dtm._window_manager._sw._packet_data_size = pds
+            dtm._window_manager._rw._packet_data_size = pds
 
         if "time_out_interval" in config_data:
-            dtm._window_manager._sw._time_out_interval = config_data["time_out_interval"]
+            toi = config_data["time_out_interval"]
+            dtm._window_manager._sw._time_out_interval = toi
+            dtm._window_manager._rw._time_out_interval = toi
+
+
+        if "packet_loss_chance" in config_data:
+            plc = config_data["packet_loss_chance"]
+            dtm._window_manager._sw._packet_loss_chance = plc
+            dtm._window_manager._rw._packet_loss_chance = plc
 
         try:
             with open("ServerConfig.json", "w") as f:

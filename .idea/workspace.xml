@@ -6,14 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="a3f61069-666f-43f3-87c8-af2f8248cd53" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/ImageBtn.css" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/ImageBtn.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SlidingWindowProtocol/ReceivingWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindowProtocol/ReceivingWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SlidingWindowProtocol/SendingWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindowProtocol/SendingWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/ClientCode.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/ClientCode.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/ClientUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/ClientUI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/clientConfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/clientConfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/defines.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/defines.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Server.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,39 +33,39 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.Client.executor&quot;: &quot;Run&quot;,
-    &quot;Python.ClientCode.executor&quot;: &quot;Run&quot;,
-    &quot;Python.ClientTest.executor&quot;: &quot;Run&quot;,
-    &quot;Python.ClientUI.executor&quot;: &quot;Run&quot;,
-    &quot;Python.DataTransferManager.executor&quot;: &quot;Run&quot;,
-    &quot;Python.ReceiveTest.executor&quot;: &quot;Run&quot;,
-    &quot;Python.ReceivingWindow.executor&quot;: &quot;Run&quot;,
-    &quot;Python.SendTest.executor&quot;: &quot;Run&quot;,
-    &quot;Python.SendingWindow.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Server.executor&quot;: &quot;Run&quot;,
-    &quot;Python.ServerTest.executor&quot;: &quot;Run&quot;,
-    &quot;Python.SlidingWindowManager.executor&quot;: &quot;Run&quot;,
-    &quot;Python.SlidingWindowSender.executor&quot;: &quot;Run&quot;,
-    &quot;Python.StorageManager.executor&quot;: &quot;Run&quot;,
-    &quot;Python.clientTest.executor&quot;: &quot;Run&quot;,
-    &quot;Python.defines.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.mainB.executor&quot;: &quot;Run&quot;,
-    &quot;Python.server.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test.executor&quot;: &quot;Run&quot;,
-    &quot;Python.testStateMachine.executor&quot;: &quot;Run&quot;,
-    &quot;Python.testing.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/sabin/Files/Facultate/An 3 Home/RC Proiect/ClientStorage&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.Client.executor": "Run",
+    "Python.ClientCode.executor": "Run",
+    "Python.ClientTest.executor": "Run",
+    "Python.ClientUI.executor": "Run",
+    "Python.DataTransferManager.executor": "Run",
+    "Python.ReceiveTest.executor": "Run",
+    "Python.ReceivingWindow.executor": "Run",
+    "Python.SendTest.executor": "Run",
+    "Python.SendingWindow.executor": "Run",
+    "Python.Server.executor": "Run",
+    "Python.ServerTest.executor": "Run",
+    "Python.SlidingWindowManager.executor": "Run",
+    "Python.SlidingWindowSender.executor": "Run",
+    "Python.StorageManager.executor": "Run",
+    "Python.clientTest.executor": "Run",
+    "Python.defines.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.mainB.executor": "Run",
+    "Python.server.executor": "Run",
+    "Python.test.executor": "Run",
+    "Python.testStateMachine.executor": "Run",
+    "Python.testing.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/sabin/Files/Facultate/An 3 Home/PI Cod",
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/ClientStorage" />

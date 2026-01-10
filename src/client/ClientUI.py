@@ -1,5 +1,6 @@
 import sys
 import json
+import os
 
 from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtCore import Qt, QSize
@@ -7,49 +8,11 @@ from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtWidgets import *
 
 import defines as d
-from ClientCode import Client
+from ClientCode import Client, ClientWorker
 
 resource_path = "../../Resources/"
 
 
-class ClientWorker(QThread):
-    result_ready = pyqtSignal(str)
-    error_occurred = pyqtSignal(str)
-
-    def __init__(self, client, op_name, *args):
-        super().__init__()
-        self.client = client
-        self.op_name = op_name
-        self.args = args
-
-    def run(self):
-        try:
-            if self.op_name == "view":
-                self.client.startOp_view_tree()
-            elif self.op_name == "create":
-                self.client.startOp_create_file(*self.args)
-            elif self.op_name == "delete":
-                self.client.startOp_delete_file(*self.args)
-            elif self.op_name == "move":
-                self.client.startOp_move_file(*self.args)
-            elif self.op_name == "download":
-                self.client.startOp_download_file(self.args[0])
-            elif self.op_name == "update_config":
-                self.client.startOp_update_config(*self.args)
-            elif self.op_name == "upload":
-                self.client.startOp_upload_file(*self.args)
-
-            data = self.client.endOp_get_data()
-
-            if self.op_name == "download":
-                self.client.get_data_manager().getStorageManager().write(self.args[1], data)
-                result_message = f"SUCCESS: File downloaded to {self.args[1]}"
-                self.result_ready.emit(result_message)
-            else:
-                self.result_ready.emit(data)
-
-        except Exception as e:
-            self.error_occurred.emit(str(e))
 
 def load_button_stylesheet(stylesheet:str):
     file_path = f"{resource_path}/{stylesheet}"
@@ -59,8 +22,77 @@ def load_button_stylesheet(stylesheet:str):
     except Exception as e:
         return f"Error loading stylesheet: {e}"
 
+class ConfigWindow(QWidget):
+    back_requested = pyqtSignal()
+    config_updated = pyqtSignal(str)
+
+    def __init__(self, client):
+        super().__init__()
+        self.client = client
+        self.init_ui()
+
+    def init_ui(self):
+        self.setStyleSheet("color: white; background-color: #1e2124;")
+        layout = QVBoxLayout()
+        layout.setContentsMargins(20, 20, 20, 20)
+
+        title = QLabel("CONFIGURATION")
+        title.setFont(QFont("Consolas", 16, QFont.Bold))
+        layout.addWidget(title)
+
+
+        self.config_editor = QTextEdit()
+        self.config_editor.setFont(QFont("Consolas", 12))
+        self.config_editor.setStyleSheet("background-color: #36393e; color: white; border: 1px solid #4f545c;")
+
+        try:
+            with open("clientConfig.json", "r") as f:
+                self.config_editor.setText(f.read())
+        except:
+            self.config_editor.setText("{}")
+
+        layout.addWidget(QLabel("Edit JSON directly:"))
+        layout.addWidget(self.config_editor)
+
+        btn_layout = QHBoxLayout()
+
+        self.back_btn = QCommandLinkButton("Back")
+        self.save_btn = QCommandLinkButton("Apply config")
+
+        for btn in [self.back_btn, self.save_btn]:
+            btn.setFont(QFont("Consolas", 10, QFont.Bold))
+            btn.setFixedHeight(40)
+            btn.setCursor(Qt.PointingHandCursor)
+            btn.setStyleSheet(load_button_stylesheet("ButtonStyle.css"))
+            btn.setIcon(QIcon(f"{resource_path}/Icons/Coconut.png"))
+            btn.setIconSize(QSize(60, 60))
+
+        self.back_btn.clicked.connect(self.back_requested.emit)
+        self.save_btn.clicked.connect(self.save_config)
+
+        btn_layout.addWidget(self.back_btn)
+        btn_layout.addWidget(self.save_btn)
+
+        layout.addLayout(btn_layout)
+        self.setLayout(layout)
+
+    def save_config(self):
+        config_str = self.config_editor.toPlainText()
+        try:
+            config_data = json.loads(config_str)
+            with open("clientConfig.json", "w") as f:
+                f.write(config_str)
+
+            self.client.apply_new_config(config_data)
+            self.config_updated.emit(config_str)
+            QMessageBox.information(self, "Success", "Configuration Applied.")
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Invalid JSON: {e}")
+
 
 class ClientWindow(QWidget):
+    switch_to_config = pyqtSignal()
+
     def __init__(self, client: Client):
         super().__init__()
         self.client = client
@@ -70,62 +102,45 @@ class ClientWindow(QWidget):
         self.init_ui()
 
     def init_ui(self):
-        self.setWindowTitle("Client UI")
-        self.setGeometry(100, 100, 800, 700)
         self.setStyleSheet("color: white; background-color: #1e2124;")
-
         layout = QVBoxLayout()
         layout.setAlignment(Qt.AlignTop)
-
 
         top_container = QWidget()
         top_layout = QHBoxLayout(top_container)
         top_layout.setContentsMargins(0, 0, 0, 0)
 
-
         self.output_label = QLabel("Output:")
         self.output_label.setFont(QFont("Consolas", 12))
 
-
         self.config_btn = QPushButton()
         self.config_btn.setIcon(QIcon(f"{resource_path}/Icons/Coconut.png"))
-        self.config_btn.setIconSize(QSize(60, 60))  # Adjust size as needed
+        self.config_btn.setIconSize(QSize(60, 60))
         self.config_btn.setFixedSize(60, 60)
-
         self.config_btn.setStyleSheet(load_button_stylesheet("ImageBtn.css"))
         self.config_btn.setCursor(Qt.PointingHandCursor)
-        self.config_btn.clicked.connect(self.update_client_config)
-
+        self.config_btn.clicked.connect(self.switch_to_config.emit)
 
         top_layout.addWidget(self.output_label)
         top_layout.addStretch()
         top_layout.addWidget(self.config_btn)
 
-
-        self.output_label = QLabel("Output:")
-        self.output_label.setFont(QFont("Consolas", 12))
-
         self.output_text = QTextBrowser()
         self.output_text.setFont(QFont("Consolas", 12))
-        self.output_text.setStyleSheet("background-color: #36393e; color: white;")
+        self.output_text.setStyleSheet("background-color: #36393e; color: white; border: none;")
 
         self.source_path_label = QLabel("Source Path:")
         self.source_path_label.setFont(QFont("Consolas", 12))
+        self.source_path_text_box = QLineEdit()
+        self.source_path_text_box.setStyleSheet("background-color: #36393e; color: white; padding: 5px;")
+        self.source_path_text_box.setMinimumHeight(40)
 
         self.destination_path_label = QLabel("Destination Path:")
         self.destination_path_label.setFont(QFont("Consolas", 12))
-
-        self.source_path_text_box = QLineEdit()
-        self.source_path_text_box.setMinimumHeight(50)
-        self.source_path_text_box.setFont(QFont("Consolas", 12))
-        self.source_path_text_box.setStyleSheet("background-color: #36393e; color: white;")
-
         self.destination_path_text_box = QLineEdit()
-        self.destination_path_text_box.setMinimumHeight(50)
-        self.destination_path_text_box.setFont(QFont("Consolas", 12))
-        self.destination_path_text_box.setStyleSheet("background-color: #36393e; color: white;")
+        self.destination_path_text_box.setStyleSheet("background-color: #36393e; color: white; padding: 5px;")
+        self.destination_path_text_box.setMinimumHeight(40)
 
-        # Buttons
         self.view_btn = self.create_button("View Tree", "Icons/view tree.png", self.view_tree)
         self.create_btn = self.create_button("Create New File", "Icons/create.png", self.create_file)
         self.delete_btn = self.create_button("Delete File", "Icons/delete.png", self.delete_file)
@@ -173,7 +188,6 @@ class ClientWindow(QWidget):
     def run_operation(self, op_name, *args):
         self.write_result(f"Executing {op_name.upper()}... please wait.")
         self.set_ui_enabled(False)
-
         self.worker = ClientWorker(self.client, op_name, *args)
         self.worker.result_ready.connect(self.on_operation_success)
         self.worker.error_occurred.connect(self.on_operation_error)
@@ -184,7 +198,7 @@ class ClientWindow(QWidget):
         self.set_ui_enabled(True)
 
     def on_operation_error(self, err):
-        self.write_result(f"CRITICAL ERROR: {err}")
+        self.write_result(f"ERROR: {err}")
         self.set_ui_enabled(True)
 
     def view_tree(self):
@@ -198,7 +212,7 @@ class ClientWindow(QWidget):
             self.write_result("Error: Provide path")
 
     def delete_file(self):
-        path = self.get_source_file() # FIXED typo
+        path = self.get_source_file()
         if path:
             self.run_operation("delete", path)
         else:
@@ -233,22 +247,6 @@ class ClientWindow(QWidget):
         else:
             self.run_operation("upload", source, destination)
 
-    def update_client_config(self):
-        file_path = "clientConfig.json"
-        try:
-            with open(file_path, "r") as f:
-                config_json_str = f.read()
-                config_data = json.loads(config_json_str)
-
-            self.client.apply_new_config(config_data)
-            self.run_operation("update_config", config_json_str)
-
-        except FileNotFoundError:
-            self.write_result(f"ERROR: {file_path} not found.")
-        except Exception as e:
-            self.write_result(f"ERROR: {e}")
-
-
     def set_ui_enabled(self, enabled: bool):
         self.view_btn.setEnabled(enabled)
         self.create_btn.setEnabled(enabled)
@@ -258,15 +256,36 @@ class ClientWindow(QWidget):
         self.upload_btn.setEnabled(enabled)
         self.source_path_text_box.setEnabled(enabled)
         self.destination_path_text_box.setEnabled(enabled)
+        self.config_btn.setEnabled(enabled)
 
 
+class MainWindowContainer(QMainWindow):
+    def __init__(self, client):
+        super().__init__()
+        self.client = client
+        self.setWindowTitle("Client UI")
+        self.setGeometry(100, 100, 800, 800)
+        self.setStyleSheet("background-color: #1e2124;")
+
+        self.stacked_widget = QStackedWidget()
+        self.setCentralWidget(self.stacked_widget)
+
+        self.client_page = ClientWindow(self.client)
+        self.config_page = ConfigWindow(self.client)
+
+        self.stacked_widget.addWidget(self.client_page)
+        self.stacked_widget.addWidget(self.config_page)
+
+        self.client_page.switch_to_config.connect(lambda: self.stacked_widget.setCurrentIndex(1))
+        self.config_page.back_requested.connect(lambda: self.stacked_widget.setCurrentIndex(0))
+        self.config_page.config_updated.connect(lambda cfg: self.client_page.run_operation("update_config", cfg))
 
 
 if __name__ == "__main__":
     config = {
         "root_dir": d.CLIENT_ROOT_PATH,
         "window_size": 7,
-        "packet_data_size": 50,
+        "packet_data_size": 64,
         "sender_address": d.LOCAL_HOST_ADDR_B,
         "sender_port": d.DEFAULT_PORT_B,
         "destination_address": d.LOCAL_HOST_ADDR_A,
@@ -275,10 +294,11 @@ if __name__ == "__main__":
         "packet_loss_chance": 0.1
     }
 
-    client = Client(config)
+    if not os.path.exists("clientConfig.json"):
+        with open("clientConfig.json", "w") as f: json.dump(config, f, indent=4)
 
     app = QApplication(sys.argv)
-    window = ClientWindow(client)
-
-    window.show()
+    client_logic = Client(config)
+    main_window = MainWindowContainer(client_logic)
+    main_window.show()
     sys.exit(app.exec_())

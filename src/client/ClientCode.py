@@ -1,3 +1,5 @@
+from PyQt5.QtCore import QThread, pyqtSignal
+
 from SlidingWindowProtocol import DataTransferManager as dtm
 import defines as d
 
@@ -40,16 +42,29 @@ class Client:
 
     def apply_new_config(self, config_data: dict):
         dtm = self.data_manager
+        sw = dtm._window_manager._sw
+        rw = dtm._window_manager._rw
+
         if "window_size" in config_data:
             ws = config_data["window_size"]
-            dtm._window_manager._sw._window_size = ws
-            dtm._window_manager._rw._window_size = ws
+            sw._window_size = ws
+            rw._window_size = ws
 
         if "packet_data_size" in config_data:
-            dtm._window_manager._sw._packet_data_size = config_data["packet_data_size"]
+            pds = config_data["packet_data_size"]
+            sw._packet_data_size = pds
+            rw._packet_data_size = pds
 
         if "time_out_interval" in config_data:
-            dtm._window_manager._sw._time_out_interval = config_data["time_out_interval"]
+            toi = config_data["time_out_interval"]
+            sw._time_out_interval = toi
+            # Usually only sender needs timeout, but good for consistency
+            rw._time_out_interval = toi
+
+        if "packet_loss_chance" in config_data:  # Fixed: was 'config' (missing _data)
+            plc = config_data["packet_loss_chance"]
+            sw._packet_loss_chance = plc  # Fixed: was setting _time_out_interval
+            rw._packet_loss_chance = plc
 
     def stop(self):
         self.data_manager.stop()
@@ -180,6 +195,46 @@ class Client:
 
     def get_data_manager(self) -> DataTransferManager:
         return self.data_manager
+
+
+class ClientWorker(QThread):
+    result_ready = pyqtSignal(str)
+    error_occurred = pyqtSignal(str)
+
+    def __init__(self, client, op_name, *args):
+        super().__init__()
+        self.client = client
+        self.op_name = op_name
+        self.args = args
+
+    def run(self):
+        try:
+            if self.op_name == "view":
+                self.client.startOp_view_tree()
+            elif self.op_name == "create":
+                self.client.startOp_create_file(*self.args)
+            elif self.op_name == "delete":
+                self.client.startOp_delete_file(*self.args)
+            elif self.op_name == "move":
+                self.client.startOp_move_file(*self.args)
+            elif self.op_name == "download":
+                self.client.startOp_download_file(self.args[0])
+            elif self.op_name == "update_config":
+                self.client.startOp_update_config(*self.args)
+            elif self.op_name == "upload":
+                self.client.startOp_upload_file(*self.args)
+
+            data = self.client.endOp_get_data()
+
+            if self.op_name == "download":
+                self.client.get_data_manager().getStorageManager().write(self.args[1], data)
+                result_message = f"SUCCESS: File downloaded to {self.args[1]}"
+                self.result_ready.emit(result_message)
+            else:
+                self.result_ready.emit(data)
+
+        except Exception as e:
+            self.error_occurred.emit(str(e))
 
 
 if __name__ == "__main__":
