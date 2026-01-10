@@ -2,14 +2,10 @@ import os
 from enum import IntEnum
 
 HEADER_POS             = slice(0,1) # slice is end exclusive, so it's really 0-0
-SEQ_NR_POS             = slice(1,5) # 1-4
-DATA_LEN_POS           = slice(5,7) # 5-6
-PADDING_POS            = slice(7,8) # 7
-CHECKSUM_POS           = slice(8,10) # 8-9
-PAYLOAD_POS            = slice(10,511) # 9-511
-
-WINDOW_SIZE            = int(3)
-
+SEQ_NR_POS             = slice(1,4) # 1-3
+DATA_LEN_POS           = slice(4,6) # 4-5
+CHECKSUM_POS           = slice(6,8) # 6-7
+PAYLOAD_POS            = slice(8,512) # 8-511
 
 class InvalidDataSzException(Exception):
     def __init__(self, field:str):
@@ -21,40 +17,40 @@ class SocketNotOpenException(Exception):
         super.__init__('The socket {} is not properly configured',format(sck))
 
 class UDP_Size(IntEnum):
-    PAYLOAD_SZ         = 511
+    PAYLOAD_SZ         = 512
     HEADER_SZ          = 1
-    SEQ_NR_SZ          = 4
+    SEQ_NR_SZ          = 3
     DATA_LEN_SZ        = 2
     APP_CHECKSUM_SZ    = 2
     CHECKSUM_CHUNK_SZ  = 2
     MAX_DATA_SZ        = PAYLOAD_SZ - HEADER_SZ - SEQ_NR_SZ - DATA_LEN_SZ - APP_CHECKSUM_SZ
 
 class Flow_Header(IntEnum):
-    H_DONE             = 0b0000_0001
-    H_CANCEL           = 0b0000_0010
-    H_SYN              = 0b0000_0011
-    H_SYN_CHANGECONFIG = 0b0000_0100
-    H_ACK              = 0b0000_0101
-    H_NAK              = 0b0000_0110
-    H_VALID            = 0b0000_0111
-    H_OP_FAILED        = 0b0000_1000
-    H_OP_SUCCESS       = 0b0000_1001
-    H_CONFIG           = 0b0000_1010
-    H_FIN              = 0b0000_1011
+    H_DONE             = 0x01
+    H_CANCEL           = 0x02
+    H_SYN              = 0x03
+    H_SYN_CHANGECONFIG = 0x04
+    H_ACK              = 0x05
+    H_NAK              = 0x06
+    H_VALID            = 0x07
+    H_OP_FAILED        = 0x08
+    H_OP_SUCCESS       = 0x09
+    H_CONFIG           = 0x0a
+    H_FIN              = 0x0b
     
     @property
     def as_bytes(self) -> bytes:
         return self.to_bytes(UDP_Size.HEADER_SZ,'big')
 
 class Operation_Header(IntEnum):
-    H_OP_ACCESS        = 0b0001_0000 
-    H_OP_CREATE        = 0b0010_0000
-    H_OP_DELETE        = 0b0011_0000
-    H_OP_DOWNLOAD      = 0b0100_0000
-    H_OP_UPLOAD        = 0b0101_0000
-    H_OP_MOVE          = 0b0110_0000
-    H_DATA             = 0b0111_0000
-    H_OP_CONFIG        = 0b1000_0000
+    H_OP_ACCESS        = 0x10
+    H_OP_CREATE        = 0x20
+    H_OP_DELETE        = 0x30
+    H_OP_DOWNLOAD      = 0x40
+    H_OP_UPLOAD        = 0x50
+    H_OP_MOVE          = 0x60
+    H_DATA             = 0x70
+    H_OP_CONFIG        = 0x80
     @property
     def as_bytes(self) -> bytes:
         return self.to_bytes(UDP_Size.HEADER_SZ,'big')

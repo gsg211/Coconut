@@ -51,7 +51,6 @@ class SendingWindow:
     #decided if packet gets lost (used to simulate real packet  loss)
     def __will_lose(self) -> bool:
         rnd = random.random()
-        print(rnd)
         return rnd < self.__packet_loss_chance
 
     def __send_H_DONE(self,sequence_number):

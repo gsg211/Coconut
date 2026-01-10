@@ -21,7 +21,6 @@ class UDP_Packet():
             raise d.InvalidDataSzException('ACTUAL_PAYLOAD')
         
         self.__data_len = payload_len_tmp.to_bytes(d.UDP_Size.DATA_LEN_SZ,'big')
-        
         if payload_len_tmp < d.UDP_Size.MAX_DATA_SZ:
             dif = d.UDP_Size.MAX_DATA_SZ - payload_len_tmp
             self.__payload = bytes(bytearray(payload_bytes) + bytearray(dif))
@@ -38,7 +37,6 @@ class UDP_Packet():
 
         checksum                            = self.calculate_checksum()
         self.__app_checksum                 = checksum
-        self.__full_message[d.PADDING_POS] = b'\x00'
         self.__full_message[d.CHECKSUM_POS] = self.__app_checksum
 
 
