@@ -2,7 +2,7 @@ from token import NUMBER
 import random
 import time
 
-import protocol.SocketManager as sm
+import SocketAbstraction.SocketManager as sm
 from itertools import islice
 import UDP_packet as udp
 import defines as d

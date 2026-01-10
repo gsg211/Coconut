@@ -2,7 +2,7 @@
 import defines as d
 from src.SlidingWindowProtocol.SendingWindow import SendingWindow
 from src.SlidingWindowProtocol.ReceivingWindow import ReceivingWindow
-import protocol.SocketManager as sm
+import SocketAbstraction.SocketManager as sm
 
 
 class SlidingWindowManager:

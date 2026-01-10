@@ -237,7 +237,7 @@ if __name__ == "__main__":
     config["root_dir"] = d.SERVER_ROOT_PATH
 
     config["window_size"] = 7
-    config["packet_data_size"] = 6
+    config["packet_data_size"] = 50
 
     config["sender_address"] = d.LOCAL_HOST_ADDR_A
     config["sender_port"] = d.DEFAULT_PORT_A
@@ -246,7 +246,7 @@ if __name__ == "__main__":
     config["destination_port"] = d.DEFAULT_PORT_B
 
     config["time_out_interval"] = timeout
-    config["packet_loss_chance"] = 0.5
+    config["packet_loss_chance"] = 0.1
 
     server_instance = Server(config)
 

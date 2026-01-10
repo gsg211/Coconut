@@ -1,0 +1,5 @@
+{
+  "window_size": 4,
+  "packet_data_size": 32,
+  "time_out_interval": 0.1
+}
