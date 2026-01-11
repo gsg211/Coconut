@@ -70,13 +70,14 @@ class ConfigWindow(QWidget):
 
         btn_layout = QHBoxLayout()
         self.back_btn = QCommandLinkButton("Back")
+        self.back_btn.setIcon(QIcon(f"{get_resource_path()}/Icons/back.png"))
         self.save_btn = QCommandLinkButton("Apply Config")
+        self.save_btn.setIcon(QIcon(f"{get_resource_path()}/Icons/bookmark.png"))
 
         for btn in [self.back_btn, self.save_btn]:
             btn.setFont(QFont("Consolas", 12, QFont.Bold))
             btn.setCursor(Qt.PointingHandCursor)
-            btn.setIcon(QIcon(f"{get_resource_path()}/Icons/Coconut.png"))
-            btn.setIconSize(QSize(60, 60))
+            btn.setIconSize(QSize(40, 40))
             btn.setStyleSheet(load_stylesheet("ButtonStyle.css"))
 
         self.back_btn.clicked.connect(self.back_requested.emit)

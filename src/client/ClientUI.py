@@ -37,8 +37,8 @@ class ClientWindow(QWidget):
         self.output_label.setFont(QFont("Consolas", 12))
 
         self.config_btn = QPushButton()
-        self.config_btn.setIcon(QIcon(f"{get_resource_path()}/Icons/Coconut.png"))
-        self.config_btn.setIconSize(QSize(60, 60))
+        self.config_btn.setIcon(QIcon(f"{get_resource_path()}/Icons/settings.png"))
+        self.config_btn.setIconSize(QSize(40, 40))
         self.config_btn.setFixedSize(60, 60)
         self.config_btn.setStyleSheet(load_stylesheet("ImageBtn.css"))
         self.config_btn.setCursor(Qt.PointingHandCursor)
