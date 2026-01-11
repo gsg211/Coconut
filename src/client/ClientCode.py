@@ -56,13 +56,12 @@ class Client:
         if "time_out_interval" in config_data:
             toi = config_data["time_out_interval"]
             sw._time_out_interval = toi
-            # Usually only sender needs timeout, but good for consistency
             rw._time_out_interval = toi
 
-        if "packet_loss_chance" in config_data:  # Fixed: was 'config' (missing _data)
+        if "packet_loss_chance" in config_data:
             plc = config_data["packet_loss_chance"]
-            sw._packet_loss_chance = plc  # Fixed: was setting _time_out_interval
-            rw._packet_loss_chance = plc
+            sw.packet_loss_chance = plc
+            rw.packet_loss_chance = plc
 
     def stop(self):
         self.data_manager.stop()

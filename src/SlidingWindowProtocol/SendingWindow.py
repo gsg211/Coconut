@@ -27,7 +27,7 @@ class SendingWindow:
 
 
         self.__time_out_interval=time_out_interval
-        self.__packet_loss_chance=packet_loss_chance
+        self.packet_loss_chance=packet_loss_chance
         self.window= [None] * window_size
         self.packet_list : list[udp.UDP_Packet]=list()
 
@@ -51,7 +51,7 @@ class SendingWindow:
     #decided if packet gets lost (used to simulate real packet  loss)
     def __will_lose(self) -> bool:
         rnd = random.random()
-        return rnd < self.__packet_loss_chance
+        return rnd < self.packet_loss_chance
 
     def __send_H_DONE(self,sequence_number):
         done_packet = udp.UDP_Packet(d.Flow_Header.H_DONE, sequence_number, '')

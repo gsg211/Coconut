@@ -172,8 +172,8 @@ class Server:
 
         if "packet_loss_chance" in config_data:
             plc = config_data["packet_loss_chance"]
-            dtm._window_manager._sw._packet_loss_chance = plc
-            dtm._window_manager._rw._packet_loss_chance = plc
+            dtm._window_manager._sw.packet_loss_chance = plc
+            dtm._window_manager._rw.packet_loss_chance = plc
 
         try:
             with open("ServerConfig.json", "w") as f:
