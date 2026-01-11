@@ -40,23 +40,23 @@ class Client:
 
     def apply_new_config(self, config_data: dict):
         dtm = self.data_manager
-        sw = dtm._window_manager._sw
-        rw = dtm._window_manager._rw
+        sw = dtm.window_manager.sw
+        rw = dtm.window_manager.rw
 
         if "window_size" in config_data:
             ws = config_data["window_size"]
-            sw._window_size = ws
-            rw._window_size = ws
+            sw.window_size = ws
+            rw.window_size = ws
 
         if "packet_data_size" in config_data:
             pds = config_data["packet_data_size"]
-            sw._packet_data_size = pds
-            rw._packet_data_size = pds
+            sw.packet_data_size = pds
+            rw.packet_data_size = pds
 
         if "time_out_interval" in config_data:
             toi = config_data["time_out_interval"]
-            sw._time_out_interval = toi
-            rw._time_out_interval = toi
+            sw.time_out_interval = toi
+            rw.time_out_interval = toi
 
         if "packet_loss_chance" in config_data:
             plc = config_data["packet_loss_chance"]

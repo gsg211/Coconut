@@ -19,7 +19,7 @@ class SlidingWindowManager:
         self.socket_manager = sm.SocketManager(sender_address, sender_port, "def_name")
         self.socket_manager.set_peer_data(destination_address, destination_port)
 
-        self._sw = SendingWindow(
+        self.sw = SendingWindow(
             socket_manager=self.socket_manager,
             window_size=window_size,
             packet_data_size=packet_data_size,
@@ -27,7 +27,7 @@ class SlidingWindowManager:
             packet_loss_chance=packet_loss_chance
         )
 
-        self._rw = ReceivingWindow(
+        self.rw = ReceivingWindow(
             socket_manager=self.socket_manager,
             window_size=window_size,
             packet_data_size=packet_data_size,
@@ -36,27 +36,27 @@ class SlidingWindowManager:
         )
 
     def prepare_data_packets(self, data: str) -> None:
-        self._sw.convert_data_to_packets(data)
+        self.sw.convert_data_to_packets(data)
 
     def prepare_operation_packet(self, custom_header: int) -> None:
-        self._sw.prepare_operation_header(custom_header)
+        self.sw.prepare_operation_header(custom_header)
 
     def clear_sending_packet_list(self):
-        self._sw.clear_packet_list()
+        self.sw.clear_packet_list()
 
 
     def listen(self):
-        self._rw.listen()
+        self.rw.listen()
 
     def receive_window(self) -> str:
-        data = self._rw.get_data()
+        data = self.rw.get_data()
         return data if data else ""
 
     def get_custom_headers(self) ->list[int]:
-        return self._rw.get_custom_headers()
+        return self.rw.get_custom_headers()
 
     def send_window(self) -> None:
-        self._sw.send()
+        self.sw.send()
 
     def stop(self):
         self.socket_manager.signal_stop()

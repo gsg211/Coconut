@@ -22,7 +22,7 @@ class DataTransferManager:
                  ):
         self._storage_manager = storage_manager.StorageManager(root_dir)
 
-        self._window_manager = window_manager.SlidingWindowManager(
+        self.window_manager = window_manager.SlidingWindowManager(
             window_size=window_size,
             packet_data_size=packet_data_size,
             sender_address=sender_address,
@@ -37,29 +37,29 @@ class DataTransferManager:
         return self._storage_manager
 
     def listen(self):
-        self._window_manager.listen()
+        self.window_manager.listen()
 
     def get_data(self) -> str:
-        return self._window_manager.receive_window()
+        return self.window_manager.receive_window()
 
     def get_custom_headers(self) -> list[int]:
-        return self._window_manager.get_custom_headers()
+        return self.window_manager.get_custom_headers()
 
     def prepare_data_packets(self,data:str)->None:
-        self._window_manager.prepare_data_packets(data)
+        self.window_manager.prepare_data_packets(data)
 
     def prepare_operation_packet(self,custom_header:int)->None:
-        self._window_manager.prepare_operation_packet(custom_header)
+        self.window_manager.prepare_operation_packet(custom_header)
 
     def send_prepared_packets(self) -> None:
-        self._window_manager.send_window()
+        self.window_manager.send_window()
 
     def clear_sending_packet_list(self):
-        self._window_manager.clear_sending_packet_list()
+        self.window_manager.clear_sending_packet_list()
 
 
     def clear_receiving_queue(self):
-        self._window_manager.socket_manager.flush_receive_queue()
+        self.window_manager.socket_manager.flush_receive_queue()
 
     def stop(self):
-        self._window_manager.stop()
+        self.window_manager.stop()

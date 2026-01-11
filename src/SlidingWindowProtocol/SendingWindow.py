@@ -19,14 +19,14 @@ class SendingWindow:
                  time_out_interval = 0.1,  #TODO: modify placeholder value
                  packet_loss_chance=0.0):
 
-        self.__window_size=window_size
-        self.__packet_data_size=packet_data_size # the max size of a packet
+        self.window_size=window_size
+        self.packet_data_size=packet_data_size # the max size of a packet
         self.__manager = socket_manager
 
 
 
 
-        self.__time_out_interval=time_out_interval
+        self.time_out_interval=time_out_interval
         self.packet_loss_chance=packet_loss_chance
         self.window= [None] * window_size
         self.packet_list : list[udp.UDP_Packet]=list()
@@ -34,8 +34,8 @@ class SendingWindow:
     #splits the input string into multiple strings of a max length (__packet_data_size)
     def __split_input(self,data:str) -> list[str]:
         it = iter(data)
-        string_list = [''.join(islice(it, self.__packet_data_size)) \
-               for _ in range((len(data) + self.__packet_data_size - 1) // self.__packet_data_size)]
+        string_list = [''.join(islice(it, self.packet_data_size)) \
+                       for _ in range((len(data) + self.packet_data_size - 1) // self.packet_data_size)]
         return string_list
 
     #converts the string into a list of packets
@@ -88,7 +88,7 @@ class SendingWindow:
         while not acked_packets[done_seq_num]:
 
             # 1. SEND PHASE (Fill the window)
-            while next_seq_num <= total_packets and (next_seq_num - base) < self.__window_size:
+            while next_seq_num <= total_packets and (next_seq_num - base) < self.window_size:
                 packet = self.packet_list[next_seq_num - 1]
                 if not self.__will_lose():
                     self.__manager.q_snd_put(packet.get_full_message())
@@ -99,11 +99,11 @@ class SendingWindow:
 
             if next_seq_num > total_packets and not acked_packets[done_seq_num]:
                 if done_seq_num not in last_sent_time or \
-                        (time.time() - last_sent_time[done_seq_num] > self.__time_out_interval):
+                        (time.time() - last_sent_time[done_seq_num] > self.time_out_interval):
                     self.__send_H_DONE(done_seq_num)
                     last_sent_time[done_seq_num] = time.time()
 
-            for _ in range(self.__window_size):
+            for _ in range(self.window_size):
                 received = self.__manager.q_rcv_get()
                 if not received:
                     break
@@ -137,7 +137,7 @@ class SendingWindow:
             now = time.time()
             for s in range(base, next_seq_num):
                 if not acked_packets[s]:
-                    if s in last_sent_time and (now - last_sent_time[s]) > self.__time_out_interval:
+                    if s in last_sent_time and (now - last_sent_time[s]) > self.time_out_interval:
                         if not self.__will_lose():
                             self.__manager.q_snd_put(self.packet_list[s - 1].get_full_message())
                         else:
