@@ -1,11 +1,6 @@
 {
-    "root_dir": "/home/sabin/Files/Facultate/An 3 Home/RC Proiect/ClientStorage",
-    "window_size": 7,
-    "packet_data_size": 64,
-    "sender_address": "127.0.0.2",
-    "sender_port": 18080,
-    "destination_address": "127.0.0.1",
-    "destination_port": 8080,
+    "window_size": 8,
+    "packet_data_size": 128,
     "time_out_interval": 0.5,
     "packet_loss_chance": 0.1
 }

@@ -3,8 +3,6 @@ from PyQt5.QtCore import QThread, pyqtSignal
 from SlidingWindowProtocol import DataTransferManager as dtm
 import defines as d
 
-from SlidingWindowProtocol.DataTransferManager import DataTransferManager
-
 
 class Client:
     def __init__(self, config:{}):
@@ -193,7 +191,7 @@ class Client:
         self.data_manager.clear_sending_packet_list()
         return "".join(chunks)
 
-    def get_data_manager(self) -> DataTransferManager:
+    def get_data_manager(self) -> dtm.DataTransferManager:
         return self.data_manager
 
 

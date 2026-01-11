@@ -8,9 +8,9 @@ from PyQt5.QtGui import QIcon, QFont, QPixmap
 from PyQt5.QtWidgets import *
 
 import defines as d
-from ClientCode import Client, ClientWorker
+from client.ClientCode import Client, ClientWorker
 
-from ConfigWindow import ConfigWindow, load_stylesheet, get_resource_path
+from client.ConfigWindow import ConfigWindow, load_stylesheet, get_resource_path
 
 
 class ClientWindow(QWidget):
@@ -234,9 +234,8 @@ class MainWindowContainer(QMainWindow):
         self.config_page.back_requested.connect(lambda: self.stacked_widget.setCurrentIndex(0))
         self.config_page.config_updated.connect(lambda cfg: self.client_page.run_operation("update_config", cfg))
 
-
-if __name__ == "__main__":
-    config = {
+def main():
+    initial_config = {
         "root_dir": d.CLIENT_ROOT_PATH,
         "window_size": 7,
         "packet_data_size": 64,
@@ -248,11 +247,21 @@ if __name__ == "__main__":
         "packet_loss_chance": 0.1
     }
 
+    saved_config = {
+        "window_size": 7,
+        "packet_data_size": 64,
+        "time_out_interval": 0.5,
+        "packet_loss_chance": 0.1
+    }
+
     if not os.path.exists("clientConfig.json"):
-        with open("clientConfig.json", "w") as f: json.dump(config, f, indent=4)
+        with open("clientConfig.json", "w") as f: json.dump(saved_config, f, indent=4)
 
     app = QApplication(sys.argv)
-    client_logic = Client(config)
+    client_logic = Client(initial_config)
     main_window = MainWindowContainer(client_logic)
     main_window.show()
     sys.exit(app.exec_())
+
+if __name__ == "__main__":
+    main()

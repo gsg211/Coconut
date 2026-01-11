@@ -240,29 +240,32 @@ class Server:
                     break
                 continue
 
-if __name__ == "__main__":
+def main():
     timeout = 0.5
 
-    config = {}
+    initial_config = {}
 
-    config["root_dir"] = d.SERVER_ROOT_PATH
+    initial_config["root_dir"] = d.SERVER_ROOT_PATH
 
-    config["window_size"] = 7
-    config["packet_data_size"] = 50
+    initial_config["window_size"] = 7
+    initial_config["packet_data_size"] = 50
 
-    config["sender_address"] = d.LOCAL_HOST_ADDR_A
-    config["sender_port"] = d.DEFAULT_PORT_A
+    initial_config["sender_address"] = d.LOCAL_HOST_ADDR_A
+    initial_config["sender_port"] = d.DEFAULT_PORT_A
 
-    config["destination_address"] = d.LOCAL_HOST_ADDR_B
-    config["destination_port"] = d.DEFAULT_PORT_B
+    initial_config["destination_address"] = d.LOCAL_HOST_ADDR_B
+    initial_config["destination_port"] = d.DEFAULT_PORT_B
 
-    config["time_out_interval"] = timeout
-    config["packet_loss_chance"] = 0.1
+    initial_config["time_out_interval"] = timeout
+    initial_config["packet_loss_chance"] = 0.1
 
-    server_instance = Server(config)
+    server_instance = Server(initial_config)
 
     while True:
         server_instance.startOp_listen()
+
+if __name__ == "__main__":
+    main()
 
 
 

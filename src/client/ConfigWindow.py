@@ -7,7 +7,7 @@ from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtWidgets import *
 
 def get_resource_path() -> str:
-    return  "../../Resources/"
+    return  "Resources/"
 
 
 
