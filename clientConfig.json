@@ -2,5 +2,5 @@
     "window_size": 16,
     "packet_data_size": 128,
     "time_out_interval": 0.5,
-    "packet_loss_chance": 0.6
+    "packet_loss_chance": 5.0
 }

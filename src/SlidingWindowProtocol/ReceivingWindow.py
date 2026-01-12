@@ -26,7 +26,7 @@ class ReceivingWindow:
         self.__manager = socket_manager
 
         self.__time_out_interval = time_out_interval
-        self.__packet_loss_chance = packet_loss_chance
+        self.packet_loss_chance = packet_loss_chance
         self.packet_list: list[udp.UDP_Packet] = list()
         self.done_transmission=False
 
@@ -41,7 +41,7 @@ class ReceivingWindow:
 
     # decided if packet gets lost (used to simulate real packet  loss)
     def __will_lose(self) -> bool:
-        return random.random() < self.__packet_loss_chance
+        return random.random() < self.packet_loss_chance
 
     def start(self):
         self.__manager.start()

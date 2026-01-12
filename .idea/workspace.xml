@@ -4,31 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3f61069-666f-43f3-87c8-af2f8248cd53" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientStorage/TestDir" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientStorage/b" beforeDir="false" afterPath="$PROJECT_DIR$/ClientStorage/big" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientStorage/down" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientStorage/test.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServerConfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/ServerConfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServerStorage/TestDir/src1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServerStorage/TestFolder/newFile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServerStorage/TestMove/testFile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServerStorage/TestUpload/Test2/testFile.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServerStorage/heha.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ServerStorage/hihi.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServerStorage/salut" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServerStorage/saluuut" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServerStorage/temp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServerStorage/test" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServerStorage/testDir/G/3456/testFile234" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServerStorage/testDir/renamed.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServerStorage/testDir/testFile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UNUSED/UnusedCode/client_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/UNUSED/UnusedCode/client_state.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/clientConfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/clientConfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SlidingWindowProtocol/ReceivingWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindowProtocol/ReceivingWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SlidingWindowProtocol/SendingWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlidingWindowProtocol/SendingWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SocketAbstraction/SocketManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/SocketAbstraction/SocketManager.py" afterDir="false" />
-    </list>
+    <list default="true" id="a3f61069-666f-43f3-87c8-af2f8248cd53" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
