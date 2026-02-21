@@ -1,6 +1,6 @@
 # Description
 
-Coconut is a file transfer app based on UDP and the sliding window protocol. It was our netwroking class project.
+Coconut is a file transfer app based on UDP and the sliding window protocol. It was our networking class project.
 
 ![Client UI](/Documentation/CLIENT/Client_UI.png)
 
